@@ -1,12 +1,13 @@
-FROM hackyo/debian:buster-slim
+FROM hackyo/jdk:8
 LABEL maintainer="137120918@qq.com"
 WORKDIR /root
-RUN mkdir /usr/local/java && \
-    curl -L https://cdn.azul.com/zulu-embedded/bin/zulu8.52.0.23-ca-jdk8.0.282-linux_aarch64.tar.gz -o /usr/local/java/jdk.tar.gz && \
-    tar -xf /usr/local/java/jdk.tar.gz -C /usr/local/java && \
-    mv /usr/local/java/zulu8.52.0.23-ca-jdk8.0.282-linux_aarch64/* /usr/local/java/ && \
-    rm -r /usr/local/java/zulu8.52.0.23-ca-jdk8.0.282-linux_aarch64 /usr/local/java/jdk.tar.gz
-ENV JAVA_HOME=/usr/local/java
-ENV CLASSPATH=$JAVA_HOME/lib
-ENV PATH=$PATH:$JAVA_HOME/bin
-CMD ["java", "-version"]
+RUN mkdir /usr/local/maven && \
+    curl -L https://mirrors.bfsu.edu.cn/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /usr/local/maven/maven.tar.gz && \
+    tar -xf /usr/local/maven/maven.tar.gz -C /usr/local/maven && \
+    mv /usr/local/maven/apache-maven-3.6.3/* /usr/local/maven/ && \
+    rm -r /usr/local/maven/apache-maven-3.6.3 /usr/local/maven/maven.tar.gz
+RUN mkdir /usr/local/maven/repo && \
+
+ENV M2_HOME=/usr/local/maven
+ENV PATH=$PATH:$M2_HOME/bin
+CMD ["mvn", "-v"]
