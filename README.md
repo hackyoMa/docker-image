@@ -18,3 +18,8 @@ Use example: `docker pull hackyo/debian:buster-slim`
   - [14.16.0](https://github.com/hackyoMa/docker-image/blob/node-14.16.0/Dockerfile)
 - hackyo/sentinel
   - [1.8.1](https://github.com/hackyoMa/docker-image/blob/sentinel-1.8.1/Dockerfile)
+- hackyo/keycloak
+  - [12.0.4](https://github.com/hackyoMa/docker-image/blob/keycloak-12.0.4/Dockerfile)
+  - Run: docker run -d -p 8080:8080 -p 8443:8443 -p 9990:9990 hackyo/keycloak:12.0.4
+  - Work dir: /root/keycloak/
+  - Default admin user: admin/admin
