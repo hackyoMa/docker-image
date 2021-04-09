@@ -1,4 +1,4 @@
-FROM hackyo/jdk:11
+FROM hackyo/jdk:8
 LABEL maintainer="137120918@qq.com"
 WORKDIR /root/keycloak
 RUN curl -L https://github.com/keycloak/keycloak/releases/download/12.0.4/keycloak-12.0.4.tar.gz -o /root/keycloak.tar.gz && \
