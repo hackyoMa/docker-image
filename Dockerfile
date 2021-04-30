@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM debian:buster-slim AS build
+FROM --platform=$BUILDPLATFORM debian:buster-slim AS build
 LABEL maintainer="137120918@qq.com"
 ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /root
