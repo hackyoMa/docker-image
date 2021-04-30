@@ -1,8 +1,7 @@
 name: debian-buster-slim
 on:
   push:
-    branches:
-      - debian-buster-slim
+    branches: [ debian-buster-slim ]
 jobs:
   docker:
     runs-on: ubuntu-latest
