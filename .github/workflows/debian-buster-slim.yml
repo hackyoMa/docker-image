@@ -5,7 +5,7 @@ on:
       - 'debian-buster-slim'
 jobs:
   docker:
-    runs-on: debian-buster-slim
+    runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
