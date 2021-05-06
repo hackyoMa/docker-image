@@ -1,4 +1,4 @@
-name: build
+name: debian-buster-slim
 on: push
 jobs:
   docker:
