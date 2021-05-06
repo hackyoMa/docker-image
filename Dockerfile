@@ -4,7 +4,7 @@ LABEL maintainer="137120918@qq.com"
 ARG BUILDPLATFORM
 ENV ZULU_VERSION=8.54.0.21 JAVA_VERSION=8.0.292 JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
-RUN if [[ ${BUILDPLATFORM} == "linux/amd64" ]]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
+RUN if [[ "${BUILDPLATFORM}" == "linux/amd64" ]]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     echo ${DOWNLOAD_ARCH}
 RUN if [[ ${BUILDPLATFORM} == "linux/amd64" ]]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir /usr/local/java && \
