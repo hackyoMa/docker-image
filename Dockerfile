@@ -14,4 +14,4 @@ COPY standalone.xml /usr/local/keycloak/standalone/configuration/standalone.xml
 COPY standalone-ha.xml /usr/local/keycloak/standalone/configuration/standalone-ha.xml
 RUN /bin/bash /usr/local/keycloak/bin/add-user-keycloak.sh -u admin -p admin
 
-ENTRYPOINT ["/bin/bash", "/root/keycloak/bin/standalone.sh", "--server-config=standalone-ha.xml"]
+ENTRYPOINT ["/bin/bash", "/usr/local/keycloak/bin/standalone.sh", "--server-config=standalone-ha.xml"]
