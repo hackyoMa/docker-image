@@ -2,7 +2,7 @@ name: keycloak-12
 on: push
 jobs:
   docker:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
