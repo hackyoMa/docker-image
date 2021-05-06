@@ -2,6 +2,7 @@
 FROM --platform=$BUILDPLATFORM hackyo/debian:buster-slim AS build
 LABEL maintainer="137120918@qq.com"
 ENV ZULU_VERSION=8.54.0.21 JAVA_VERSION=8.0.292 JAVA_HOME=/usr/local/java CLASSPATH=$JAVA_HOME/lib PATH=$PATH:$JAVA_HOME/bin
+RUN echo $BUILDPLATFORM && echo $CLASSPATH && echo $PATH
 RUN if [[ $BUILDPLATFORM == "linux/amd64" ]]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir /usr/local/java && \
     curl -L "https://cdn.azul.com/zulu/bin/zulu"$ZULU_VERSION"-ca-jdk"$JAVA_VERSION"-linux_"$DOWNLOAD_ARCH".tar.gz" -o /usr/local/java/jdk.tar.gz && \
