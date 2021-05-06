@@ -2,7 +2,7 @@ name: keycloak-12
 on: push
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    runs-on: macos-11.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,3 +22,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: hackyo/keycloak:12
+          cache-from: type=registry,ref=user/app:latest
+          cache-to: type=inline
