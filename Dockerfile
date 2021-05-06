@@ -1,13 +1,15 @@
-FROM hackyo/debian:buster-slim
+# syntax=docker/dockerfile:latest
+FROM --platform=$TARGETPLATFORM hackyo/debian:buster-slim AS build
 LABEL maintainer="137120918@qq.com"
-WORKDIR /root
-RUN mkdir /usr/local/node && mkdir /usr/local/node/node_cache && mkdir /usr/local/node/node_global && \
-    curl -L https://npm.taobao.org/mirrors/node/v14.16.0/node-v14.16.0-linux-arm64.tar.gz -o /usr/local/node/node.tar.gz && \
+ARG TARGETPLATFORM
+ENV NODE_VERSION=v14.16.1 NODE_HOME=/usr/local/node
+ENV PATH=${PATH}:${NODE_HOME}/bin:${NODE_HOME}/node_global/bin
+RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="arm64"; fi && \
+    mkdir /usr/local/node && mkdir /usr/local/node/node_cache && mkdir /usr/local/node/node_global && \
+    curl -L https://npm.taobao.org/mirrors/node/${NODE_VERSION}/node-${NODE_VERSION}-linux-${DOWNLOAD_ARCH}.tar.gz -o /usr/local/node/node.tar.gz && \
     tar -xf /usr/local/node/node.tar.gz -C /usr/local/node && \
-    mv /usr/local/node/node-v14.16.0-linux-arm64/* /usr/local/node/ && \
-    rm -r /usr/local/node/node-v14.16.0-linux-arm64 /usr/local/node/node.tar.gz
-ENV NODE_HOME=/usr/local/node
-ENV PATH=$PATH:$NODE_HOME/bin:$NODE_HOME/node_global/bin
+    mv /usr/local/node/node-${NODE_VERSION}-linux-${DOWNLOAD_ARCH}/* /usr/local/node/ && \
+    rm -r /usr/local/node/node-${NODE_VERSION}-linux-${DOWNLOAD_ARCH} /usr/local/node/node.tar.gz
 RUN npm config set prefix "/usr/local/node/node_global" && \
     npm config set cache "/usr/local/node/node_cache" && \
     npm config set registry "https://registry.npm.taobao.org"
