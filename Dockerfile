@@ -2,7 +2,8 @@
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
 LABEL maintainer="137120918@qq.com"
 ENV KEYCLOAK_VERSION=12.0.4
-RUN curl -L https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o /usr/local/keycloak.tar.gz && \
+RUN mkdir /usr/local/keycloak && \
+    curl -L https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o /usr/local/keycloak.tar.gz && \
     tar -xf /usr/local/keycloak.tar.gz -C /usr/local/keycloak && \
     mv /usr/local/keycloak/keycloak-${KEYCLOAK_VERSION}/* /usr/local/keycloak/ && \
     rm -r /usr/local/keycloak/keycloak-${KEYCLOAK_VERSION} /usr/local/keycloak.tar.gz
