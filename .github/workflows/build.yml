@@ -1,4 +1,4 @@
-name: debian-buster-slim
+name: jdk-11
 on: push
 jobs:
   docker:
