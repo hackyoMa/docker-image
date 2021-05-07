@@ -1,4 +1,4 @@
-FROM hackyo/jdk:8
+FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
 LABEL maintainer="137120918@qq.com"
 
 # set environment
@@ -18,12 +18,13 @@ ENV MODE="cluster" \
     NACOS_DEBUG="n" \
     TOMCAT_ACCESSLOG_ENABLED="false"
 
-ARG NACOS_VERSION=2.0.0
+ARG NACOS_VERSION=2.0.1
+ARG HOT_FIX_FLAG=""
 
 WORKDIR $BASE_DIR
 
 RUN set -x \
-    && curl -L https://github.com/alibaba/nacos/releases/download/2.0.0-bugfix/nacos-server-2.0.0.tar.gz -o /home/nacos-server.tar.gz \
+    && curl -L https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}${HOT_FIX_FLAG}/nacos-server-${NACOS_VERSION}.tar.gz -o /home/nacos-server.tar.gz \
     && tar -xf /home/nacos-server.tar.gz -C /home \
     && rm -rf /home/nacos-server.tar.gz /home/nacos/bin/* /home/nacos/conf/*.properties /home/nacos/conf/*.example /home/nacos/conf/nacos-mysql.sql
 
