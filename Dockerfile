@@ -1,6 +1,8 @@
-FROM hackyo/jdk:11
+# syntax=docker/dockerfile:latest
+FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
 LABEL maintainer="137120918@qq.com"
-WORKDIR /root
-RUN curl -L https://github.com/alibaba/Sentinel/releases/download/1.8.1/sentinel-dashboard-1.8.1.jar -o /root/sentinel-dashboard.jar
+ENV SENTINEL_VERSION=1.8.1
+RUN RUN mkdir /usr/local/sentinel && \
+    curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_VERSION}/sentinel-dashboard-${SENTINEL_VERSION}.jar -o /usr/local/sentinel/sentinel-dashboard.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "sentinel-dashboard.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/local/sentinel/sentinel-dashboard.jar"]
