@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com"
-ENV KEYCLOAK_VERSION=12.0.4
+FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
+LABEL maintainer="137120918@qq.com" version="1.0.0"
+ENV KEYCLOAK_VERSION=13.0.1
 RUN mkdir /usr/local/keycloak && \
     curl -L https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o /usr/local/keycloak.tar.gz && \
     tar -xf /usr/local/keycloak.tar.gz -C /usr/local/keycloak && \
@@ -15,5 +15,6 @@ COPY standalone.xml /usr/local/keycloak/standalone/configuration/standalone.xml
 COPY standalone-ha.xml /usr/local/keycloak/standalone/configuration/standalone-ha.xml
 RUN /bin/bash /usr/local/keycloak/bin/add-user-keycloak.sh -u admin -p admin
 
-EXPOSE 8080 8443 9990
+HEALTHCHECK --interval=30s --timeout=15s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+EXPOSE 8080 8443
 ENTRYPOINT ["/bin/bash", "/usr/local/keycloak/bin/standalone.sh", "--server-config=standalone-ha.xml"]
