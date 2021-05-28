@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:buster-slim AS build
-LABEL maintainer="137120918@qq.com" version="1.0"
+LABEL maintainer="137120918@qq.com" version="1.0.0"
 ARG TARGETPLATFORM
 ENV ZULU_VERSION=8.54.0.21 JAVA_VERSION=8.0.292 JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
