@@ -30,5 +30,5 @@ Use example: `docker pull hackyo/debian:buster-slim`
   - [4.8.3.Final](https://github.com/hackyoMa/docker-image/blob/keycloak-4.8.3.Final/Dockerfile)
   - [13](https://github.com/hackyoMa/docker-image/blob/keycloak-13/Dockerfile)
   - Run: `docker run -d -p 8080:8080 -p 8443:8443 hackyo/keycloak:13`
+  - Set admin password: `docker exec <CONTAINER> /usr/local/keycloak/bin/add-user-keycloak.sh -u <USERNAME> -p <PASSWORD>`
   - Work dir: `/usr/local/keycloak/`
-  - Admin default password: `admin`
