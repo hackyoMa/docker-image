@@ -41,6 +41,6 @@ RUN mkdir logs \
 	&& ln -sf /dev/stderr start.out
 RUN chmod +x bin/docker-startup.sh
 
-HEALTHCHECK --interval=30s --timeout=15s --start-period=15s --retries=3 CMD curl -f http://localhost:8848/ || exit 1
+HEALTHCHECK --interval=30s --timeout=15s --start-period=5s --retries=3 CMD curl -f http://localhost:8848/ || exit 1
 EXPOSE 8848
 ENTRYPOINT ["bin/docker-startup.sh"]
