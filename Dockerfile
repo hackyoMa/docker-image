@@ -16,5 +16,5 @@ COPY standalone-ha.xml /usr/local/keycloak/standalone/configuration/standalone-h
 RUN /bin/bash /usr/local/keycloak/bin/add-user-keycloak.sh -u admin -p admin
 
 HEALTHCHECK --interval=30s --timeout=15s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
-EXPOSE 8080 8443 9990
+EXPOSE 8080 8443
 ENTRYPOINT ["/bin/bash", "/usr/local/keycloak/bin/standalone.sh", "--server-config=standalone-ha.xml"]
