@@ -21,8 +21,11 @@ Use example: `docker pull hackyo/debian:buster-slim`
   - [3.8-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-11/Dockerfile)
 - hackyo/node
   - [14](https://github.com/hackyoMa/docker-image/blob/node-14/Dockerfile)
+  - [16](https://github.com/hackyoMa/docker-image/blob/node-16/Dockerfile)
 - hackyo/sentinel
   - [1.8](https://github.com/hackyoMa/docker-image/blob/sentinel-1.8/Dockerfile)
+- hackyo/zipkin
+  - [2](https://github.com/hackyoMa/docker-image/blob/zipkin-2/Dockerfile)
 - hackyo/keycloak
   - [4.8.3.Final](https://github.com/hackyoMa/docker-image/blob/keycloak-4.8.3.Final/Dockerfile)
   - [12](https://github.com/hackyoMa/docker-image/blob/keycloak-12/Dockerfile)
