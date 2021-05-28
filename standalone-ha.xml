@@ -621,7 +621,7 @@
             <inet-address value="${jboss.bind.address:0.0.0.0}"/>
         </interface>
         <interface name="private">
-            <inet-address value="${jboss.bind.address.private:127.0.0.1}"/>
+            <inet-address value="${jboss.bind.address.private:0.0.0.0}"/>
         </interface>
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
