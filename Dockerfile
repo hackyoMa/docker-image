@@ -13,7 +13,6 @@ RUN curl -L https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.22/mys
 
 COPY standalone.xml /usr/local/keycloak/standalone/configuration/standalone.xml
 COPY standalone-ha.xml /usr/local/keycloak/standalone/configuration/standalone-ha.xml
-RUN /bin/bash /usr/local/keycloak/bin/add-user-keycloak.sh -u admin -p admin
 
 HEALTHCHECK --interval=30s --timeout=15s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080 8443
