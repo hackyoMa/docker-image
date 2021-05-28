@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com"
+LABEL maintainer="137120918@qq.com" version="1.0.0"
 
 # set environment
 ENV MODE="cluster" \
@@ -41,5 +41,6 @@ RUN mkdir logs \
 	&& ln -sf /dev/stderr start.out
 RUN chmod +x bin/docker-startup.sh
 
+HEALTHCHECK --interval=30s --timeout=15s --start-period=15s --retries=3 CMD curl -f http://localhost:8848/ || exit 1
 EXPOSE 8848
 ENTRYPOINT ["bin/docker-startup.sh"]
