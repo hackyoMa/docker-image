@@ -2,6 +2,8 @@
 
 Supported Platforms: `linux/amd64, linux/arm64`
 
+Build using 'Docker Buildx' and 'GitHub Actions'
+
 Use example: `docker pull hackyo/debian:buster-slim`
 
 ### Dockerfile:
