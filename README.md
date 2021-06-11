@@ -4,12 +4,13 @@ Supported Platforms: `linux/amd64, linux/arm64`
 
 Build using `Docker Buildx` and `GitHub Actions`
 
-Use example: `docker pull hackyo/debian:buster-slim`
+Use example: `docker pull hackyo/debian:bullseye-slim`
 
 ### Dockerfile:
 
 - hackyo/debian
     - [buster-slim](https://github.com/hackyoMa/docker-image/blob/debian-buster-slim/Dockerfile)
+    - [bullseye-slim](https://github.com/hackyoMa/docker-image/blob/debian-bullseye-slim/Dockerfile)
 - hackyo/jdk
     - [8](https://github.com/hackyoMa/docker-image/blob/jdk-8/Dockerfile)
     - [11](https://github.com/hackyoMa/docker-image/blob/jdk-11/Dockerfile)
