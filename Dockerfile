@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/debian:buster-slim AS build
-LABEL maintainer="137120918@qq.com" version="1.0.0"
+FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
+LABEL maintainer="137120918@qq.com" version="1.0.1"
 ARG TARGETPLATFORM
 ENV NODE_VERSION=14.17.0 NODE_HOME=/usr/local/node
 ENV PATH=${PATH}:${NODE_HOME}/bin:${NODE_HOME}/node_global/bin
