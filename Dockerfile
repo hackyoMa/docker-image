@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com" version="1.0.0"
+LABEL maintainer="137120918@qq.com" version="1.0.1"
 
 # set environment
 ENV MODE="cluster" \
