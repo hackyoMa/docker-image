@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
-LABEL maintainer="137120918@qq.com" version="1.0.0"
+LABEL maintainer="137120918@qq.com" version="1.0.1"
 ENV ZIPKIN_VERSION=2.23.2
 RUN mkdir /usr/local/zipkin && \
     curl -L https://repo1.maven.org/maven2/io/zipkin/zipkin-server/${ZIPKIN_VERSION}/zipkin-server-${ZIPKIN_VERSION}-exec.jar -o /usr/local/zipkin/zipkin.jar
