@@ -1,4 +1,4 @@
-name: debian-buster-slim
+name: debian-bullseye-slim
 on: push
 jobs:
   docker:
@@ -21,6 +21,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/debian:buster-slim
+          tags: hackyo/debian:bullseye-slim
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
