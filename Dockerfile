@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com" version="1.0.2"
+LABEL maintainer="137120918@qq.com" version="1.0.3"
 
 # set environment
 ENV MODE="cluster" \
@@ -19,7 +19,7 @@ ENV MODE="cluster" \
     NACOS_DEBUG="n" \
     TOMCAT_ACCESSLOG_ENABLED="false"
 
-ARG NACOS_VERSION=2.0.2
+ARG NACOS_VERSION=2.0.3
 ARG HOT_FIX_FLAG=""
 
 WORKDIR $BASE_DIR
