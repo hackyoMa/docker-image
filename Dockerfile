@@ -10,6 +10,7 @@ RUN curl -L https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$
     tar -xf /usr/local/elasticsearch/elasticsearch.tar.gz -C /usr/local/elasticsearch && \
     mv /usr/local/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}/* /usr/local/elasticsearch/ && \
     rm -r /usr/local/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION} /usr/local/elasticsearch/elasticsearch.tar.gz
+COPY elasticsearch.yml /usr/local/elasticsearch/config/elasticsearch.yml
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:9200/ || exit 1
 EXPOSE 9200 9300
