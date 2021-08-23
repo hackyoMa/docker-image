@@ -1,4 +1,4 @@
-name: maven-3.6-jdk-8
+name: elasticsearch-6.6.0
 on: push
 jobs:
   docker:
@@ -21,6 +21,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/maven:3.6-jdk-8
+          tags: hackyo/elasticsearch:6.6.0
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
