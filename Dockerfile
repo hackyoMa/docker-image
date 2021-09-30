@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com" version="1.0.3"
-ENV M2_VERSION=3.8.1 M2_HOME=/usr/local/maven
+LABEL maintainer="137120918@qq.com" version="1.0.4"
+ENV M2_VERSION=3.8.2 M2_HOME=/usr/local/maven
 ENV PATH=${PATH}:${M2_HOME}/bin
 RUN mkdir /usr/local/maven && mkdir /usr/local/maven/repo && \
     curl -L https://downloads.apache.org/maven/maven-3/${M2_VERSION}/binaries/apache-maven-${M2_VERSION}-bin.tar.gz -o /usr/local/maven/maven.tar.gz && \
