@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="1.0.3"
+LABEL maintainer="137120918@qq.com" version="1.0.4"
 ARG TARGETPLATFORM
 ENV ZULU_VERSION_X64=8.56.0.21 ZULU_VERSION_AARCH64=8.56.0.23 JAVA_VERSION=8.0.302 JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
