@@ -1,4 +1,4 @@
-name: keycloak-14
+name: keycloak-15
 on: push
 jobs:
   docker:
@@ -21,6 +21,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/keycloak:14
+          tags: hackyo/keycloak:15
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
