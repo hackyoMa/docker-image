@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
+FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
 LABEL maintainer="137120918@qq.com" version="1.0.4"
 ENV KEYCLOAK_VERSION=15.0.2
 RUN mkdir /usr/local/keycloak && \
