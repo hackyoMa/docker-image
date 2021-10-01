@@ -21,8 +21,10 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
 - hackyo/maven
   - [3.6-jdk-8](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-8/Dockerfile)
   - [3.6-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-11/Dockerfile)
+  - [3.6-jdk-17](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-17/Dockerfile)
   - [3.8-jdk-8](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-8/Dockerfile)
   - [3.8-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-11/Dockerfile)
+  - [3.8-jdk-17](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-17/Dockerfile)
 - hackyo/node
   - [14](https://github.com/hackyoMa/docker-image/blob/node-14/Dockerfile)
   - [16](https://github.com/hackyoMa/docker-image/blob/node-16/Dockerfile)
