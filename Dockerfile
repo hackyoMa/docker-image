@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
+FROM --platform=$TARGETPLATFORM hackyo/jdk:17 AS build
 LABEL maintainer="137120918@qq.com" version="1.0.4"
 ENV M2_VERSION=3.8.2 M2_HOME=/usr/local/maven
 ENV PATH=${PATH}:${M2_HOME}/bin
