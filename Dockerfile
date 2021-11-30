@@ -12,5 +12,5 @@ RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else D
     rm -r /usr/local/node/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH} /usr/local/node/node.tar.gz && \
     npm config set prefix "/usr/local/node/node_global" && \
     npm config set cache "/usr/local/node/node_cache" && \
-    npm config set registry "https://registry.npm.taobao.org"
+    npm config set registry "https://registry.npmmirror.com"
 CMD ["node", "-v"]
