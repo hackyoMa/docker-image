@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:latest
 FROM scratch
 LABEL maintainer="137120918@qq.com" version="1.0.5"
-ADD https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-arm64v8/bullseye/slim/rootfs.tar.xz /
+ADD rootfs.tar.xz /
 ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
     echo "deb http://mirrors.aliyun.com/debian bullseye main contrib non-free" > /etc/apt/sources.list && \
