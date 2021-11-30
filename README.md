@@ -20,7 +20,7 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
   - [17](https://github.com/hackyoMa/docker-image/blob/jre-17/Dockerfile)
 - hackyo/nacos
     - [2.0](https://github.com/hackyoMa/docker-image/blob/nacos-2.0/Dockerfile)
-    - Usage reference: [https://github.com/nacos-group/nacos-docker/blob/master/README.md](https://github.com/nacos-group/nacos-docker)
+    - Usage reference: [https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)
 - hackyo/maven
   - [3.6-jdk-8](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-8/Dockerfile)
   - [3.6-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-11/Dockerfile)
