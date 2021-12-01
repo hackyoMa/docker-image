@@ -2,12 +2,12 @@
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
 LABEL maintainer="137120918@qq.com" version="1.0.5"
 ARG TARGETPLATFORM
-ENV ZULU_VERSION_X64=8.58.0.13 ZULU_VERSION_AARCH64=8.58.0.13 JAVA_VERSION=8.0.312 JAVA_HOME=/usr/local/java
+ENV TEMURIN_VERSION="8u312-b07" JAVA_VERSION="8u312b07" JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
-RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then BASE_DOMAIN="zulu" && DOWNLOAD_ARCH="x64" && ZULU_VERSION=${ZULU_VERSION_X64}; else BASE_DOMAIN="zulu-embedded" && DOWNLOAD_ARCH="aarch64" && ZULU_VERSION=${ZULU_VERSION_AARCH64}; fi && \
+RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir ${JAVA_HOME} && \
-    curl -L https://cdn.azul.com/${BASE_DOMAIN}/bin/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}.tar.gz -o ${JAVA_HOME}/jdk.tar.gz && \
+    curl -L https://github.com/adoptium/temurin8-binaries/releases/download/jdk${TEMURIN_VERSION}/OpenJDK8U-jdk_${DOWNLOAD_ARCH}_linux_hotspot_${JAVA_VERSION}.tar.gz -o ${JAVA_HOME}/jdk.tar.gz && \
     tar -xf ${JAVA_HOME}/jdk.tar.gz -C ${JAVA_HOME} && \
-    mv ${JAVA_HOME}/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}/* ${JAVA_HOME}/ && \
-    rm -r ${JAVA_HOME}/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH} ${JAVA_HOME}/jdk.tar.gz
+    mv ${JAVA_HOME}/jdk${TEMURIN_VERSION}/* ${JAVA_HOME}/ && \
+    rm -r ${JAVA_HOME}/jdk${TEMURIN_VERSION} ${JAVA_HOME}/jdk.tar.gz
 CMD ["java", "-version"]
