@@ -9,7 +9,6 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
 ### Dockerfile:
 
 - hackyo/debian
-    - [buster-slim](https://github.com/hackyoMa/docker-image/blob/debian-buster-slim/Dockerfile)
     - [bullseye-slim](https://github.com/hackyoMa/docker-image/blob/debian-bullseye-slim/Dockerfile)
 - hackyo/jdk
     - [8](https://github.com/hackyoMa/docker-image/blob/jdk-8/Dockerfile)
@@ -23,15 +22,11 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
     - [2.0](https://github.com/hackyoMa/docker-image/blob/nacos-2.0/Dockerfile)
     - Usage reference: [https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)
 - hackyo/maven
-  - [3.6-jdk-8](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-8/Dockerfile)
-  - [3.6-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-11/Dockerfile)
-  - [3.6-jdk-17](https://github.com/hackyoMa/docker-image/blob/maven-3.6-jdk-17/Dockerfile)
   - [3.8-jdk-8](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-8/Dockerfile)
   - [3.8-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-11/Dockerfile)
   - [3.8-jdk-17](https://github.com/hackyoMa/docker-image/blob/maven-3.8-jdk-17/Dockerfile)
 - hackyo/node
   - [16](https://github.com/hackyoMa/docker-image/blob/node-16/Dockerfile)
-  - [17](https://github.com/hackyoMa/docker-image/blob/node-17/Dockerfile)
 - hackyo/elasticsearch
   - [6.6.0](https://github.com/hackyoMa/docker-image/blob/elasticsearch-6.6.0/Dockerfile)
 - hackyo/sentinel
