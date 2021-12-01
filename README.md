@@ -15,6 +15,10 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
     - [8](https://github.com/hackyoMa/docker-image/blob/jdk-8/Dockerfile)
     - [11](https://github.com/hackyoMa/docker-image/blob/jdk-11/Dockerfile)
     - [17](https://github.com/hackyoMa/docker-image/blob/jdk-17/Dockerfile)
+- hackyo/jre
+  - [8](https://github.com/hackyoMa/docker-image/blob/jre-8/Dockerfile)
+  - [11](https://github.com/hackyoMa/docker-image/blob/jre-11/Dockerfile)
+  - [17](https://github.com/hackyoMa/docker-image/blob/jre-17/Dockerfile)
 - hackyo/nacos
     - [2.0](https://github.com/hackyoMa/docker-image/blob/nacos-2.0/Dockerfile)
     - Usage reference: [https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)
