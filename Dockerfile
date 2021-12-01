@@ -16,4 +16,4 @@ COPY standalone-ha.xml ${KEYCLOAK_HOME}/standalone/configuration/standalone-ha.x
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080 8443
-ENTRYPOINT ["/bin/bash", "${KEYCLOAK_HOME}/bin/standalone.sh", "--server-config=standalone-ha.xml"]
+ENTRYPOINT /bin/bash ${KEYCLOAK_HOME}/bin/standalone.sh --server-config=standalone-ha.xml
