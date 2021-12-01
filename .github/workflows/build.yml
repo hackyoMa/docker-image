@@ -1,4 +1,4 @@
-name: jdk-11
+name: jre-11
 on: push
 jobs:
   docker:
@@ -21,6 +21,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/jdk:11
+          tags: hackyo/jre:11
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
