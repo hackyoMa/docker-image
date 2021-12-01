@@ -32,6 +32,8 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
 - hackyo/node
   - [16](https://github.com/hackyoMa/docker-image/blob/node-16/Dockerfile)
   - [17](https://github.com/hackyoMa/docker-image/blob/node-17/Dockerfile)
+- hackyo/elasticsearch
+  - [6.6.0](https://github.com/hackyoMa/docker-image/blob/elasticsearch-6.6.0/Dockerfile)
 - hackyo/sentinel
   - [1.8](https://github.com/hackyoMa/docker-image/blob/sentinel-1.8/Dockerfile)
 - hackyo/zipkin
