@@ -6,4 +6,4 @@ RUN mkdir ${SENTINEL_HOME} && \
     curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_VERSION}/sentinel-dashboard-${SENTINEL_VERSION}.jar -o ${SENTINEL_HOME}/sentinel-dashboard.jar
 HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080
-ENTRYPOINT java -jar ${SENTINEL_HOME}/sentinel-dashboard.jar
+ENTRYPOINT java -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard -jar ${SENTINEL_HOME}/sentinel-dashboard.jar
