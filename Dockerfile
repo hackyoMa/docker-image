@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jre:17 AS build
+FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
 LABEL maintainer="137120918@qq.com" version="2.0.1"
 ENV SENTINEL_VERSION=1.8.3 SENTINEL_HOME=/usr/local/sentinel
 RUN mkdir ${SENTINEL_HOME} && \
