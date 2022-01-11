@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="2.0.0"
+LABEL maintainer="137120918@qq.com" version="2.0.1"
 ARG TARGETPLATFORM
-ENV NODE_VERSION=16.13.0 NODE_HOME=/usr/local/node
+ENV NODE_VERSION=16.13.2 NODE_HOME=/usr/local/node
 ENV PATH=${PATH}:${NODE_HOME}/bin:${NODE_HOME}/node_global/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="arm64"; fi && \
     mkdir ${NODE_HOME} && mkdir ${NODE_HOME}/node_cache && mkdir ${NODE_HOME}/node_global && \
