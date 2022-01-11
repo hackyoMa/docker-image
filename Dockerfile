@@ -8,7 +8,7 @@ RUN mkdir ${KEYCLOAK_HOME} && \
     mv ${KEYCLOAK_HOME}/keycloak-${KEYCLOAK_VERSION}/* ${KEYCLOAK_HOME}/ && \
     rm -r ${KEYCLOAK_HOME}/keycloak-${KEYCLOAK_VERSION} ${KEYCLOAK_HOME}/keycloak.tar.gz && \
     mkdir -p ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main && \
-    curl -L https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22.jar -o ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main/mysql-connector-java.jar
+    curl -L https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar -o ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main/mysql-connector-java.jar
 
 COPY mysql-module.xml ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main/module.xml
 COPY standalone.xml ${KEYCLOAK_HOME}/standalone/configuration/standalone.xml
