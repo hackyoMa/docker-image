@@ -1,0 +1,21 @@
+server:
+  shutdown: GRACEFUL
+spring:
+  application:
+    name: spring-boot-admin
+  profiles:
+    active: dev
+  thymeleaf:
+    check-template-location: false
+  security:
+    user:
+      name: admin
+      password: admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
