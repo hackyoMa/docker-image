@@ -33,6 +33,8 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
   - [1.8](https://github.com/hackyoMa/docker-image/blob/sentinel-1.8/Dockerfile)
 - hackyo/zipkin
   - [2](https://github.com/hackyoMa/docker-image/blob/zipkin-2/Dockerfile)
+- hackyo/spring-boot-admin
+  - [2](https://github.com/hackyoMa/docker-image/blob/spring-boot-admin-2/Dockerfile)
 - hackyo/keycloak
   - [4.8.3.Final](https://github.com/hackyoMa/docker-image/blob/keycloak-4.8.3.Final/Dockerfile)
   - [16](https://github.com/hackyoMa/docker-image/blob/keycloak-16/Dockerfile)
