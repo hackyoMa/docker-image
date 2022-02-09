@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="2.0.1"
+LABEL maintainer="137120918@qq.com" version="2.0.2"
 ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
     echo "deb http://mirrors.aliyun.com/debian bullseye main contrib non-free" > /etc/apt/sources.list && \
