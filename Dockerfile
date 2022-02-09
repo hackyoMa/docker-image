@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="2.0.1"
+LABEL maintainer="137120918@qq.com" version="2.0.2"
 ARG TARGETPLATFORM
-ENV ZULU_VERSION_X64=11.52.13 ZULU_VERSION_AARCH64=11.52.13 JAVA_VERSION=11.0.13 JAVA_HOME=/usr/local/java
+ENV ZULU_VERSION_X64=11.54.23 ZULU_VERSION_AARCH64=11.54.23 JAVA_VERSION=11.0.14 JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then BASE_DOMAIN="zulu" && DOWNLOAD_ARCH="x64" && ZULU_VERSION=${ZULU_VERSION_X64}; else BASE_DOMAIN="zulu-embedded" && DOWNLOAD_ARCH="aarch64" && ZULU_VERSION=${ZULU_VERSION_AARCH64}; fi && \
     mkdir ${JAVA_HOME} && \
