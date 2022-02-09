@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.1"
+LABEL maintainer="137120918@qq.com" version="2.0.2"
 
-ARG NACOS_VERSION=2.0.3
+ARG NACOS_VERSION=2.0.4
 ARG HOT_FIX_FLAG=""
 
 RUN set -x \
