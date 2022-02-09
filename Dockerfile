@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="2.0.1"
+LABEL maintainer="137120918@qq.com" version="2.0.2"
 ARG TARGETPLATFORM
-ENV TEMURIN_VERSION="8u312-b07" JAVA_VERSION="8u312b07" JAVA_HOME=/usr/local/java
+ENV TEMURIN_VERSION="8u322-b06" JAVA_VERSION="8u322b06" JAVA_HOME=/usr/local/java
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir ${JAVA_HOME} && \
