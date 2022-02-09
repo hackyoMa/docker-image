@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.1"
+LABEL maintainer="137120918@qq.com" version="2.0.2"
 ENV SENTINEL_VERSION=1.8.3 SENTINEL_HOME=/usr/local/sentinel
 RUN mkdir ${SENTINEL_HOME} && \
     curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_VERSION}/sentinel-dashboard-${SENTINEL_VERSION}.jar -o ${SENTINEL_HOME}/sentinel-dashboard.jar
