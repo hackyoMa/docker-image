@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.3"
+LABEL maintainer="137120918@qq.com" version="2.0.4"
 ENV KEYCLOAK_VERSION=16.1.1 KEYCLOAK_HOME=/usr/local/keycloak
 RUN mkdir ${KEYCLOAK_HOME} && \
     curl -L https://github.com/keycloak/keycloak/releases/download/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o ${KEYCLOAK_HOME}/keycloak.tar.gz && \
