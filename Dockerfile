@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
-LABEL maintainer="137120918@qq.com" version="2.0.2"
+LABEL maintainer="137120918@qq.com" version="2.0.3"
 ARG TARGETPLATFORM
 ENV NODE_VERSION=16.14.0 NODE_HOME=/usr/local/node
 ENV PATH=${PATH}:${NODE_HOME}/node_global/bin:${NODE_HOME}/bin
