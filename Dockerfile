@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.3"
+LABEL maintainer="137120918@qq.com" version="2.0.4"
 ENV ZIPKIN_VERSION=2.23.16 ZIPKIN_HOME=/usr/local/zipkin
 ENV JAVA_APP_JAR=${ZIPKIN_HOME}/zipkin.jar
 RUN mkdir ${ZIPKIN_HOME} && \
