@@ -2,7 +2,7 @@
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
 LABEL maintainer="137120918@qq.com" version="2.0.2"
 ARG TARGETPLATFORM
-ENV TEMURIN_VERSION="8u322-b06" JAVA_VERSION="8u322b06" JAVA_HOME=/usr/local/java
+ENV TEMURIN_VERSION="8u322-b06" JAVA_VERSION="8u322b06" JAVA_HOME=/usr/local/java JAVA_OPTIONS=-Dfile.encoding=utf-8
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir ${JAVA_HOME} && \
@@ -10,4 +10,5 @@ RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else D
     tar -xf ${JAVA_HOME}/jdk.tar.gz -C ${JAVA_HOME} && \
     mv ${JAVA_HOME}/jdk${TEMURIN_VERSION}/* ${JAVA_HOME}/ && \
     rm -r ${JAVA_HOME}/jdk${TEMURIN_VERSION} ${JAVA_HOME}/jdk.tar.gz
+COPY run-java.sh /usr/local/run-java.sh
 CMD ["java", "-version"]
