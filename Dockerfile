@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.4"
+LABEL maintainer="137120918@qq.com" version="2.0.3"
 ENV ELASTICSEARCH_VERSION=6.6.0 ELASTICSEARCH_HOME=/usr/local/elasticsearch
 RUN useradd -m elasticsearch -s /bin/bash && \
     mkdir ${ELASTICSEARCH_HOME} && \
