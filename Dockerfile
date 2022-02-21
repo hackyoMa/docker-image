@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:17 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.3"
+LABEL maintainer="137120918@qq.com" version="2.0.4"
 ENV SPRING_BOOT_ADMIN_HOME=/usr/local/spring-boot-admin
 ENV JAVA_APP_JAR=${SPRING_BOOT_ADMIN_HOME}/spring-boot-admin.jar
 COPY target/spring-boot-admin-1.0.0.jar ${SPRING_BOOT_ADMIN_HOME}/spring-boot-admin.jar
