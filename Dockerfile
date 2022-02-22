@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
 LABEL maintainer="137120918@qq.com" version="2.0.3"
-ENV KEYCLOAK_VERSION=4.8.3.Final KEYCLOAK_HOME=/usr/local/keycloak
+ENV KEYCLOAK_VERSION=4.8.3.Final KEYCLOAK_HOME=/opt/jboss/keycloak
 RUN mkdir ${KEYCLOAK_HOME} && \
     curl -L https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o ${KEYCLOAK_HOME}/keycloak.tar.gz && \
     tar -xf ${KEYCLOAK_HOME}/keycloak.tar.gz -C ${KEYCLOAK_HOME} && \
