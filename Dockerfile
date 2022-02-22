@@ -12,6 +12,6 @@ RUN curl -L https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$
     rm -r ${ELASTICSEARCH_HOME}/elasticsearch-${ELASTICSEARCH_VERSION} ${ELASTICSEARCH_HOME}/elasticsearch.tar.gz
 COPY elasticsearch.yml ${ELASTICSEARCH_HOME}/config/elasticsearch.yml
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:9200/ || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:9200/_cat/health || exit 1
 EXPOSE 9200 9300
 ENTRYPOINT ${ELASTICSEARCH_HOME}/bin/elasticsearch
