@@ -1,4 +1,6 @@
-FROM jboss/base-jdk:8
+# syntax=docker/dockerfile:latest
+FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
+LABEL maintainer="137120918@qq.com" version="2.0.3"
 
 ENV KEYCLOAK_VERSION 4.8.3.Final
 ENV JDBC_POSTGRES_VERSION 42.2.2
