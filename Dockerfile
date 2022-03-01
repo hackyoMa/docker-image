@@ -18,7 +18,8 @@ ARG KEYCLOAK_DIST=https://downloads.jboss.org/keycloak/$KEYCLOAK_VERSION/keycloa
 
 USER root
 
-RUN apt install -y jq git && apt autoremove -y && apt clean
+RUN apt install -y jq git && apt autoremove -y && apt clean \
+    && useradd -m jboss
 
 ADD tools /opt/jboss/tools
 RUN /opt/jboss/tools/build-keycloak.sh
