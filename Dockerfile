@@ -18,7 +18,7 @@ ARG KEYCLOAK_DIST=https://downloads.jboss.org/keycloak/$KEYCLOAK_VERSION/keycloa
 
 USER root
 
-RUN yum install -y epel-release git && yum install -y jq openssl which && yum clean all
+RUN apt install -y jq git && apt autoremove -y && apt clean
 
 ADD tools /opt/jboss/tools
 RUN /opt/jboss/tools/build-keycloak.sh
