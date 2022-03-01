@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:8 AS build
+FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
 LABEL maintainer="137120918@qq.com" version="2.0.3"
 
 ENV KEYCLOAK_VERSION 4.8.3.Final
