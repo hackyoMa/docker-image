@@ -1,4 +1,6 @@
-FROM registry.access.redhat.com/ubi8-minimal
+# syntax=docker/dockerfile:latest
+FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
+LABEL maintainer="137120918@qq.com" version="2.0.3"
 
 ENV KEYCLOAK_VERSION 17.0.0
 ENV JDBC_POSTGRES_VERSION 42.2.5
@@ -17,13 +19,12 @@ ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLO
 
 USER root
 
-RUN microdnf update -y && microdnf install -y glibc-langpack-en gzip hostname java-11-openjdk-headless openssl tar which && microdnf clean all
-
 ADD tools /opt/jboss/tools
 RUN /opt/jboss/tools/build-keycloak.sh
 
 USER 1000
 
+HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080
 EXPOSE 8443
 
