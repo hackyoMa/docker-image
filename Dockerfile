@@ -1,19 +1,30 @@
-# syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
-LABEL maintainer="137120918@qq.com" version="2.0.3"
-ENV KEYCLOAK_VERSION=4.8.3.Final KEYCLOAK_HOME=/opt/jboss/keycloak
-RUN mkdir -p ${KEYCLOAK_HOME} && \
-    curl -L https://downloads.jboss.org/keycloak/${KEYCLOAK_VERSION}/keycloak-${KEYCLOAK_VERSION}.tar.gz -o ${KEYCLOAK_HOME}/keycloak.tar.gz && \
-    tar -xf ${KEYCLOAK_HOME}/keycloak.tar.gz -C ${KEYCLOAK_HOME} && \
-    mv ${KEYCLOAK_HOME}/keycloak-${KEYCLOAK_VERSION}/* ${KEYCLOAK_HOME}/ && \
-    rm -r ${KEYCLOAK_HOME}/keycloak-${KEYCLOAK_VERSION} ${KEYCLOAK_HOME}/keycloak.tar.gz && \
-    mkdir -p ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main && \
-    curl -L https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22.jar -o ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main/mysql-connector-java.jar
+FROM jboss/base-jdk:8
 
-COPY mysql-module.xml ${KEYCLOAK_HOME}/modules/system/layers/keycloak/com/mysql/jdbc/main/module.xml
-COPY standalone.xml ${KEYCLOAK_HOME}/standalone/configuration/standalone.xml
-COPY standalone-ha.xml ${KEYCLOAK_HOME}/standalone/configuration/standalone-ha.xml
+ENV KEYCLOAK_VERSION 4.8.3.Final
+ENV JDBC_POSTGRES_VERSION 42.2.2
+ENV JDBC_MYSQL_VERSION 5.1.46
+ENV JDBC_MARIADB_VERSION 2.2.3
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
-EXPOSE 8080 8443
-ENTRYPOINT /bin/bash ${KEYCLOAK_HOME}/bin/standalone.sh --server-config=standalone-ha.xml
+ENV LAUNCH_JBOSS_IN_BACKGROUND 1
+ENV PROXY_ADDRESS_FORWARDING false
+ENV JBOSS_HOME /opt/jboss/keycloak
+ENV LANG en_US.UTF-8
+
+ARG GIT_REPO
+ARG GIT_BRANCH
+ARG KEYCLOAK_DIST=https://downloads.jboss.org/keycloak/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
+
+USER root
+
+RUN yum install -y epel-release git && yum install -y jq openssl which && yum clean all
+
+ADD tools /opt/jboss/tools
+RUN /opt/jboss/tools/build-keycloak.sh
+
+USER 1000
+
+EXPOSE 8080
+
+ENTRYPOINT [ "/opt/jboss/tools/docker-entrypoint.sh" ]
+
+CMD ["-b", "0.0.0.0"]
