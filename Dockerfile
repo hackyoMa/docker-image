@@ -6,8 +6,8 @@ ARG NACOS_VERSION=2.0.4
 ARG HOT_FIX_FLAG=""
 
 RUN set -x \
-    && curl -L https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}${HOT_FIX_FLAG}/nacos-server-${NACOS_VERSION}.tar.gz -o /var/tmp/nacos-server.tar.gz \
-    && tar -xf /var/tmp/nacos-server.tar.gz -C /home \
+    && curl -SL --output /var/tmp/nacos-server.tar.gz https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}${HOT_FIX_FLAG}/nacos-server-${NACOS_VERSION}.tar.gz \
+    && tar -xzvf /var/tmp/nacos-server.tar.gz -C /home \
     && rm -rf /var/tmp/nacos-server.tar.gz /home/nacos/bin/* /home/nacos/conf/*.properties /home/nacos/conf/*.example /home/nacos/conf/nacos-mysql.sql
 
 # set environment
@@ -40,6 +40,5 @@ RUN mkdir -p logs \
     && ln -sf /dev/stderr start.out
 RUN chmod +x bin/docker-startup.sh
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8848/nacos/ || exit 1
 EXPOSE 8848
 ENTRYPOINT ["bin/docker-startup.sh"]
