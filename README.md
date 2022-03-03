@@ -37,8 +37,5 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
   - [2](https://github.com/hackyoMa/docker-image/blob/spring-boot-admin-2/Dockerfile)
 - hackyo/keycloak
   - [4.8.3.Final](https://github.com/hackyoMa/docker-image/blob/keycloak-4.8.3.Final/Dockerfile)
-  - [16](https://github.com/hackyoMa/docker-image/blob/keycloak-16/Dockerfile)
-  - Run: `docker run -d -p 8080:8080 -p 8443:8443 hackyo/keycloak:16`
-  - Set admin password: `docker exec <CONTAINER> /opt/jboss/keycloak/bin/add-user-keycloak.sh -u <USERNAME> -p <PASSWORD>`
-  - Restart: `docker restart <CONTAINER>`
-  - Work dir: `/opt/jboss/keycloak/`
+  - [17](https://github.com/hackyoMa/docker-image/blob/keycloak-17/Dockerfile)
+    - Usage reference: [https://github.com/keycloak/keycloak-containers](https://github.com/keycloak/keycloak-containers)
