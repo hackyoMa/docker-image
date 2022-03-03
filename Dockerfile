@@ -26,7 +26,6 @@ RUN /opt/jboss/tools/build-keycloak.sh
 
 USER 1000
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080
 
 ENTRYPOINT [ "/opt/jboss/tools/docker-entrypoint.sh" ]
