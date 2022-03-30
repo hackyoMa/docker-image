@@ -8,7 +8,7 @@ RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else D
     mkdir -p ${NODE_HOME} && mkdir ${NODE_HOME}/node_cache && mkdir ${NODE_HOME}/node_global && \
     curl -L https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH}.tar.gz -o ${NODE_HOME}/node.tar.gz && \
     tar -xf ${NODE_HOME}/node.tar.gz -C ${NODE_HOME} && \
-    mv ${NODE_HOME}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH}/* ${NODE_HOME}/ && \
+    mv -f ${NODE_HOME}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH}/* ${NODE_HOME}/ && \
     rm -r ${NODE_HOME}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH} ${NODE_HOME}/node.tar.gz && \
     npm config set prefix "${NODE_HOME}/node_global" && \
     npm config set cache "${NODE_HOME}/node_cache" && \
