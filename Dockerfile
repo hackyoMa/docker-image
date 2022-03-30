@@ -2,7 +2,7 @@
 FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
 LABEL maintainer="137120918@qq.com" version="20220331"
 ARG TARGETPLATFORM
-ENV ZULU_VERSION_X64=8.60.0.21 ZULU_VERSION_AARCH64=8.60.0.21 JAVA_VERSION=8u322b06 JAVA_HOME=/usr/java/openjdk-8 JAVA_OPTIONS=-Dfile.encoding=utf-8
+ENV ZULU_VERSION_X64=8.60.0.21 ZULU_VERSION_AARCH64=8.60.0.21 JAVA_VERSION=8.0.322 JAVA_HOME=/usr/java/openjdk-8 JAVA_OPTIONS=-Dfile.encoding=utf-8
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 COPY run-java.sh /usr/java/run-java.sh
 RUN chmod +x /usr/java/run-java.sh && \
