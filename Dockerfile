@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
 LABEL maintainer="137120918@qq.com" version="20220330"
-ENV M2_VERSION=3.8.5 M2_HOME=/usr/local/maven
-ENV PATH=${PATH}:${M2_HOME}/bin
-RUN mkdir ${M2_HOME} && mkdir ${M2_HOME}/repo && \
-    curl -L https://downloads.apache.org/maven/maven-3/${M2_VERSION}/binaries/apache-maven-${M2_VERSION}-bin.tar.gz -o ${M2_HOME}/maven.tar.gz && \
-    tar -xf ${M2_HOME}/maven.tar.gz -C ${M2_HOME} && \
-    mv ${M2_HOME}/apache-maven-${M2_VERSION}/* ${M2_HOME}/ && \
-    rm -r ${M2_HOME}/apache-maven-${M2_VERSION} ${M2_HOME}/maven.tar.gz
-COPY settings.xml ${M2_HOME}/conf/settings.xml
+ENV MAVEN_VERSION=3.8.5 MAVEN_HOME=/usr/share/maven
+ENV PATH=${PATH}:${MAVEN_HOME}/bin
+RUN mkdir ${MAVEN_HOME} && mkdir ${MAVEN_HOME}/repo && \
+    curl -L https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o ${MAVEN_HOME}/maven.tar.gz && \
+    tar -xf ${MAVEN_HOME}/maven.tar.gz -C ${MAVEN_HOME} && \
+    mv ${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}/* ${MAVEN_HOME}/ && \
+    rm -r ${MAVEN_HOME}/apache-maven-${MAVEN_VERSION} ${MAVEN_HOME}/maven.tar.gz
+COPY settings.xml ${MAVEN_HOME}/conf/settings.xml
 CMD ["mvn", "-v"]
