@@ -5,7 +5,7 @@ ARG TARGETPLATFORM
 ENV NODE_VERSION=16.14.2 NODE_HOME=/usr/local
 ENV PATH=${PATH}:${NODE_HOME}/node_global/bin:${NODE_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="arm64"; fi && \
-    mkdir ${NODE_HOME} && mkdir ${NODE_HOME}/node_cache && mkdir ${NODE_HOME}/node_global && \
+    mkdir -p ${NODE_HOME} && mkdir ${NODE_HOME}/node_cache && mkdir ${NODE_HOME}/node_global && \
     curl -L https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH}.tar.gz -o ${NODE_HOME}/node.tar.gz && \
     tar -xf ${NODE_HOME}/node.tar.gz -C ${NODE_HOME} && \
     mv ${NODE_HOME}/node-v${NODE_VERSION}-linux-${DOWNLOAD_ARCH}/* ${NODE_HOME}/ && \
