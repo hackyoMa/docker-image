@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="20220331"
+LABEL maintainer="137120918@qq.com" version="20220420"
 
 ENV KEYCLOAK_VERSION 17.0.1
 ENV JDBC_POSTGRES_VERSION 42.2.5
