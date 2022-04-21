@@ -39,3 +39,7 @@ Use example: `docker pull hackyo/debian:bullseye-slim`
     - [4.8.3.Final](https://github.com/hackyoMa/docker-image/blob/keycloak-4.8.3.Final/Dockerfile)
     - [17](https://github.com/hackyoMa/docker-image/blob/keycloak-17/Dockerfile)
     - Usage reference: [https://github.com/keycloak/keycloak-containers](https://github.com/keycloak/keycloak-containers)
+- hackyo/jenkins
+  - [2.3](https://github.com/hackyoMa/docker-image/blob/jenkins-2.3/Dockerfile)
+  - [2.60.3](https://github.com/hackyoMa/docker-image/blob/jenkins-2.60.3/Dockerfile)
+  - Usage reference: [https://github.com/jenkinsci/docker](https://github.com/jenkinsci/docker)
