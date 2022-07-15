@@ -1,4 +1,4 @@
-package io.github.hackyoma.springbootadmin.config;
+package com.github.hackyoma.springbootadmin.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -15,10 +15,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import java.util.UUID;
 
 /**
- * WebSecurityConfig
+ * SecuritySecureConfig
  *
  * @author hackyo
- * @version 2018/8/22
+ * @version 2022/7/15
  */
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {

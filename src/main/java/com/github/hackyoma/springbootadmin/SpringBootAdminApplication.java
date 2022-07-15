@@ -1,18 +1,18 @@
-package io.github.hackyoma.springbootadmin;
+package com.github.hackyoma.springbootadmin;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Application
+ * SpringBootAdminApplication
  *
  * @author hackyo
- * @version 2018/8/22
+ * @version 2022/7/15
  */
-@SpringBootApplication(scanBasePackages = {"io.github.hackyoma.springbootadmin"})
+@SpringBootApplication
 @EnableAdminServer
-public class Application {
+public class SpringBootAdminApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
