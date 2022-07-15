@@ -1,10 +1,9 @@
 server:
   shutdown: GRACEFUL
+  port: 8080
 spring:
   application:
     name: spring-boot-admin
-  profiles:
-    active: dev
   thymeleaf:
     check-template-location: false
   security:
