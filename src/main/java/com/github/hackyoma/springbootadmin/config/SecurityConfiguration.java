@@ -33,8 +33,7 @@ public class SecurityConfiguration {
     private final SecurityProperties security;
 
     @Autowired
-    public SecurityConfiguration(AdminServerProperties adminServer,
-                                 SecurityProperties security) {
+    public SecurityConfiguration(AdminServerProperties adminServer, SecurityProperties security) {
         this.adminServer = adminServer;
         this.security = security;
     }
