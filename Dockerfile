@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
+FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
 LABEL maintainer="137120918@qq.com" version="20221109"
 
 ARG NACOS_VERSION=2.1.2
