@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
-LABEL maintainer="137120918@qq.com" version="20220715"
+LABEL maintainer="137120918@qq.com" version="20221109"
 ENV MAVEN_VERSION=3.8.6 MAVEN_HOME=/usr/share/maven
 ENV PATH=${PATH}:${MAVEN_HOME}/bin
 RUN mkdir ${MAVEN_HOME} && mkdir ${MAVEN_HOME}/repo && \
