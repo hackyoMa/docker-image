@@ -1,34 +1,30 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="20220715"
+FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
+LABEL maintainer="137120918@qq.com" version="20221109"
 
-ENV KEYCLOAK_VERSION 18.0.2
-ENV JDBC_POSTGRES_VERSION 42.3.3
-ENV JDBC_MYSQL_VERSION 8.0.22
-ENV JDBC_MARIADB_VERSION 2.5.4
-ENV JDBC_MSSQL_VERSION 10.2.1.jre11
+ENV KEYCLOAK_VERSION 999-SNAPSHOT
+ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
 
-ENV LAUNCH_JBOSS_IN_BACKGROUND 1
-ENV PROXY_ADDRESS_FORWARDING false
-ENV JBOSS_HOME /opt/jboss/keycloak
+ADD $KEYCLOAK_DIST /tmp/keycloak/
+
+# The next step makes it uniform for local development and upstream built.
+# If it is a local tar archive then it is unpacked, if from remote is just downloaded.
+RUN (cd /tmp/keycloak && \
+    tar -xvf /tmp/keycloak/keycloak-*.tar.gz && \
+    rm /tmp/keycloak/keycloak-*.tar.gz) || true
+
+RUN mv /tmp/keycloak/keycloak-* /opt/keycloak && mkdir -p /opt/keycloak/data
+
+RUN chmod -R g+rwX /opt/keycloak
+
 ENV LANG en_US.UTF-8
 
-ARG GIT_REPO
-ARG GIT_BRANCH
-ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-legacy-$KEYCLOAK_VERSION.tar.gz
-
-USER root
-
-RUN useradd -m jboss
-
-ADD tools /opt/jboss/tools
-RUN /opt/jboss/tools/build-keycloak.sh
+RUN echo "keycloak:x:0:root" >> /etc/group && \
+    echo "keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin" >> /etc/passwd
 
 USER 1000
 
 EXPOSE 8080
 EXPOSE 8443
 
-ENTRYPOINT [ "/opt/jboss/tools/docker-entrypoint.sh" ]
-
-CMD ["-b", "0.0.0.0"]
+ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
