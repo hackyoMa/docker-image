@@ -2,7 +2,7 @@
 FROM --platform=$TARGETPLATFORM hackyo/jdk:11 AS build
 LABEL maintainer="137120918@qq.com" version="20221109"
 
-ENV KEYCLOAK_VERSION 999-SNAPSHOT
+ENV KEYCLOAK_VERSION 20.0.1
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
 
 ADD $KEYCLOAK_DIST /tmp/keycloak/
