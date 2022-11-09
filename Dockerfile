@@ -5,6 +5,6 @@ ENV SENTINEL_VERSION=1.8.6 SENTINEL_HOME=/usr/share/sentinel JAVA_OPTIONS="-Dfil
 ENV JAVA_APP_JAR=${SENTINEL_HOME}/sentinel-dashboard.jar
 RUN mkdir ${SENTINEL_HOME} && \
     curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_VERSION}/sentinel-dashboard-${SENTINEL_VERSION}.jar -o ${SENTINEL_HOME}/sentinel-dashboard.jar
-HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -f http://localhost:8080/ || exit 1
 EXPOSE 8080
 ENTRYPOINT /usr/java/run-java.sh
