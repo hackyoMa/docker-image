@@ -1,4 +1,4 @@
-name: maven-3.8-jdk-17
+name: maven-3.9-jdk-17
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/maven:3.8-jdk-17
+          tags: hackyo/maven:3.9-jdk-17
