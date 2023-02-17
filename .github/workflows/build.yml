@@ -1,4 +1,4 @@
-name: spring-boot-admin-2
+name: spring-boot-admin-3
 on: push
 jobs:
   docker:
@@ -30,4 +30,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/spring-boot-admin:2
+          tags: hackyo/spring-boot-admin:3
