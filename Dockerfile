@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:8 AS build
-LABEL maintainer="137120918@qq.com" version="20221109"
+LABEL maintainer="137120918@qq.com" version="20230217"
 
-ARG NACOS_VERSION=2.1.2
+ARG NACOS_VERSION=2.2.0
 ARG HOT_FIX_FLAG=""
 
 RUN set -x \
@@ -18,7 +18,7 @@ ENV MODE="cluster" \
     CLUSTER_CONF="/home/nacos/conf/cluster.conf" \
     FUNCTION_MODE="all" \
     NACOS_USER="nacos" \
-    JAVA="/usr/java/openjdk-11/bin/java" \
+    JAVA="/usr/java/openjdk-8/bin/java" \
     JVM_XMS="1g" \
     JVM_XMX="1g" \
     JVM_XMN="512m" \
