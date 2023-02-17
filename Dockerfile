@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jre:11 AS build
-LABEL maintainer="137120918@qq.com" version="20221109"
+FROM --platform=$TARGETPLATFORM hackyo/jdk:17 AS build
+LABEL maintainer="137120918@qq.com" version="20230217"
 
-ENV KEYCLOAK_VERSION 20.0.1
+ENV KEYCLOAK_VERSION 20.0.3
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
 
 ADD $KEYCLOAK_DIST /tmp/keycloak/
@@ -14,7 +14,6 @@ RUN (cd /tmp/keycloak && \
     rm /tmp/keycloak/keycloak-*.tar.gz) || true
 
 RUN mv /tmp/keycloak/keycloak-* /opt/keycloak && mkdir -p /opt/keycloak/data
-
 RUN chmod -R g+rwX /opt/keycloak
 
 ENV LANG en_US.UTF-8
