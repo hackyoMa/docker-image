@@ -1,4 +1,4 @@
-name: jre-17
+name: jre-21
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/jre:17
+          tags: hackyo/jre:21
