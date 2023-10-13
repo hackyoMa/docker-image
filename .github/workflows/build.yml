@@ -1,4 +1,4 @@
-name: jdk-17
+name: jdk-21
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/jdk:17
+          tags: hackyo/jdk:21
