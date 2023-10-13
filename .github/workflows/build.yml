@@ -1,4 +1,4 @@
-name: debian-bullseye-slim
+name: debian-bookworm-slim
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/debian:bullseye-slim
+          tags: hackyo/debian:bookworm-slim
