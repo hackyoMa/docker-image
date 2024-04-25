@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.2.5</version>
         <relativePath/>
     </parent>
 
     <groupId>com.github.hackyoma</groupId>
     <artifactId>spring-boot-admin</artifactId>
-    <version>3.1.5</version>
+    <version>3.2.3</version>
     <name>Spring Boot Admin</name>
     <description>Spring Boot Admin</description>
 
@@ -22,7 +22,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <java.version>21</java.version>
-        <spring-boot-admin.version>3.1.5</spring-boot-admin.version>
+        <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
     </properties>
 
     <dependencies>
