@@ -1,4 +1,4 @@
-name: nacos-2.2
+name: nacos-2.3
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/nacos:2.2
+          tags: hackyo/nacos:2.3
