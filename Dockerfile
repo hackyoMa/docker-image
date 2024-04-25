@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jre:21 AS build
-LABEL maintainer="137120918@qq.com" version="20231013"
-ENV SENTINEL_VERSION=1.8.6 SENTINEL_HOME=/usr/share/sentinel JAVA_OPTIONS="-Dfile.encoding=utf-8 -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard"
+LABEL maintainer="137120918@qq.com" version="20240425"
+ENV SENTINEL_VERSION=1.8.7 SENTINEL_HOME=/usr/share/sentinel JAVA_OPTIONS="-Dfile.encoding=utf-8 -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard"
 ENV JAVA_APP_JAR=${SENTINEL_HOME}/sentinel-dashboard.jar
 RUN mkdir ${SENTINEL_HOME} && \
     curl -L https://github.com/alibaba/Sentinel/releases/download/${SENTINEL_VERSION}/sentinel-dashboard-${SENTINEL_VERSION}.jar -o ${SENTINEL_HOME}/sentinel-dashboard.jar
