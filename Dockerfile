@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/jdk:17 AS build
-LABEL maintainer="137120918@qq.com" version="20231013"
+LABEL maintainer="137120918@qq.com" version="20240425"
 
-ENV KEYCLOAK_VERSION 22.0.4
+ENV KEYCLOAK_VERSION 24.0.3
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
 
 ADD $KEYCLOAK_DIST /tmp/keycloak/
@@ -17,6 +17,7 @@ RUN mv /tmp/keycloak/keycloak-* /opt/keycloak && mkdir -p /opt/keycloak/data
 RUN chmod -R g+rwX /opt/keycloak
 
 ENV LANG en_US.UTF-8
+ENV KC_RUN_IN_CONTAINER true
 
 RUN echo "keycloak:x:0:root" >> /etc/group && \
     echo "keycloak:x:1000:0:keycloak user:/opt/keycloak:/sbin/nologin" >> /etc/passwd
@@ -25,5 +26,6 @@ USER 1000
 
 EXPOSE 8080
 EXPOSE 8443
+EXPOSE 9000
 
 ENTRYPOINT [ "/opt/keycloak/bin/kc.sh" ]
