@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM debian:bookworm-slim AS build
-LABEL maintainer="137120918@qq.com" version="20231013"
+LABEL maintainer="137120918@qq.com" version="20240425"
 ENV LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
     rm /etc/apt/sources.list.d/debian.sources && \
