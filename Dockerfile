@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/debian:bullseye-slim AS build
+FROM --platform=$TARGETPLATFORM hackyo/debian:bookworm-slim AS build
 LABEL maintainer="137120918@qq.com" version="20240425"
 ARG TARGETPLATFORM
 ENV NODE_VERSION=20.12.2 NODE_HOME=/usr/local
