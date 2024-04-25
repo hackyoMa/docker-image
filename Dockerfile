@@ -10,6 +10,6 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shangh
     echo "deb http://mirrors.aliyun.com/debian bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
     apt update -y && apt install -y apt-transport-https ca-certificates && \
     sed -i 's/http/https/g' /etc/apt/sources.list && apt update -y && apt upgrade -y && \
-    apt install -y procps iproute2 iputils-ping tcpdump telnet curl wget vim && \
+    apt install -y procps iproute2 iputils-ping tcpdump telnet curl wget vim ttf-dejavu fontconfig && \
     apt autoremove -y && apt clean
 CMD ["bash"]
