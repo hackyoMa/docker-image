@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM --platform=$TARGETPLATFORM hackyo/debian:bookworm-slim AS build
-LABEL maintainer="137120918@qq.com" version="20240530"
+LABEL maintainer="137120918@qq.com" version="20240531"
 ARG TARGETPLATFORM
 ENV ZULU_VERSION_X64=11.72.19 ZULU_VERSION_AARCH64=11.72.19 JAVA_VERSION=11.0.23 JAVA_HOME=/usr/java/openjdk-11 JAVA_OPTIONS=-Dfile.encoding=utf-8
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
