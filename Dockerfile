@@ -12,5 +12,6 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shangh
     sed -i 's/http/https/g' /etc/apt/sources.list && apt update -y && apt upgrade -y && \
     apt install -y procps iproute2 iputils-ping tcpdump telnet curl wget vim fonts-dejavu fontconfig && \
     apt autoremove -y && apt clean && \
-    sed -i 's/mouse=a/mouse-=a/g' /usr/share/vim/vim90/defaults.vim
+    sed -i 's/mouse=a/mouse-=a/g' /usr/share/vim/vim90/defaults.vim && \
+    sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/ssh_config
 CMD ["bash"]
