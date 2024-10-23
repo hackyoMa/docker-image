@@ -6,7 +6,7 @@ ENV ZULU_VERSION_X64=8.82.0.21 ZULU_VERSION_AARCH64=8.82.0.21 JAVA_VERSION=8.0.4
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64" && ZULU_VERSION=${ZULU_VERSION_X64}; else DOWNLOAD_ARCH="aarch64" && ZULU_VERSION=${ZULU_VERSION_AARCH64}; fi && \
     mkdir -p ${JAVA_HOME} && \
-    curl -L https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}.tar.gz -o ${JAVA_HOME}/jdk.tar.gz && \
+    curl -L https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jre${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}.tar.gz -o ${JAVA_HOME}/jdk.tar.gz && \
     tar -xf ${JAVA_HOME}/jdk.tar.gz -C ${JAVA_HOME} && \
     mv ${JAVA_HOME}/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}/jre/* ${JAVA_HOME}/ && \
     rm -rf ${JAVA_HOME}/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH} ${JAVA_HOME}/jdk.tar.gz
