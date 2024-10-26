@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:21 AS build
+FROM --platform=$TARGETPLATFORM hackyo/graalvm-jdk:21 AS build
 LABEL maintainer="137120918@qq.com" version="20241023"
 ENV MAVEN_VERSION=3.9.6 MAVEN_HOME=/usr/share/maven
 ENV PATH=${PATH}:${MAVEN_HOME}/bin
