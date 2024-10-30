@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM hackyo/debian:bookworm-slim
-LABEL maintainer="137120918@qq.com" version="20241023"
+LABEL maintainer="137120918@qq.com" version="20241030"
 ARG TARGETPLATFORM
 ENV ZULU_VERSION=17.54.21 JAVA_VERSION=17.0.13 JAVA_HOME=/usr/java/openjdk-17
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
