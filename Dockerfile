@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/debian:bookworm-slim AS build
-LABEL maintainer="137120918@qq.com" version="20241023"
+FROM hackyo/debian:bookworm-slim
+LABEL maintainer="137120918@qq.com" version="20241030"
 ARG TARGETPLATFORM
 ENV NODE_VERSION=20.18.0 NODE_HOME=/usr/local
 ENV PATH=${PATH}:${NODE_HOME}/node_global/bin:${NODE_HOME}/bin
@@ -13,4 +13,4 @@ RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else D
     npm config set prefix "${NODE_HOME}/node_global" && \
     npm config set cache "${NODE_HOME}/node_cache" && \
     npm install -g npm
-CMD node -v && npm -v
+CMD ["node", "-v"]
