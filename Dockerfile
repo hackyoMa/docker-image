@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
-FROM --platform=$TARGETPLATFORM hackyo/jdk:21 AS build
-LABEL maintainer="137120918@qq.com" version="20241023"
+FROM hackyo/jdk:21
+LABEL maintainer="137120918@qq.com" version="20241030"
 
 ENV KEYCLOAK_VERSION 26.0.1
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
