@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/node:20
+          tags: hackyo/node:22
