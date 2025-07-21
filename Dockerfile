@@ -2,7 +2,7 @@
 FROM amd64/buildpack-deps:buster-curl as installer
 LABEL maintainer="137120918@qq.com" version="20250721"
 
-ARG NACOS_VERSION=2.5.1
+ARG NACOS_VERSION=3.0.2
 ARG HOT_FIX_FLAG=""
 
 RUN set -x \
@@ -10,7 +10,7 @@ RUN set -x \
     && tar -xzvf /var/tmp/nacos-server.tar.gz -C /home \
     && rm -rf /var/tmp/nacos-server.tar.gz /home/nacos/bin/* /home/nacos/conf/*.properties /home/nacos/conf/*.example /home/nacos/conf/nacos-mysql.sql
 
-FROM hackyo/jre:8
+FROM hackyo/jre:17
 
 # set environment
 ENV MODE="cluster" \
@@ -20,7 +20,7 @@ ENV MODE="cluster" \
     CLUSTER_CONF="/home/nacos/conf/cluster.conf" \
     FUNCTION_MODE="all" \
     NACOS_USER="nacos" \
-    JAVA="/usr/java/openjdk-8/bin/java" \
+    JAVA="/usr/java/openjdk-17/bin/java" \
     JVM_XMS="1g" \
     JVM_XMX="1g" \
     JVM_XMN="512m" \
