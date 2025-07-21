@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM hackyo/debian:bookworm-slim
-LABEL maintainer="137120918@qq.com" version="20241030"
+LABEL maintainer="137120918@qq.com" version="20250721"
 ARG TARGETPLATFORM
-ENV NODE_VERSION=20.18.0 NODE_HOME=/usr/local
+ENV NODE_VERSION=22.17.1 NODE_HOME=/usr/local
 ENV PATH=${PATH}:${NODE_HOME}/node_global/bin:${NODE_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="arm64"; fi && \
     mkdir ${NODE_HOME}/node_cache && mkdir ${NODE_HOME}/node_global && \
