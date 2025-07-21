@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:latest
 FROM hackyo/debian:bookworm-slim
-LABEL maintainer="137120918@qq.com" version="20241030"
+LABEL maintainer="137120918@qq.com" version="20250721"
 ARG TARGETPLATFORM
-ENV ZULU_VERSION=8.82.0.21 JAVA_VERSION=8.0.432 JAVA_HOME=/usr/java/openjdk-8
+ENV ZULU_VERSION=8.88.0.19 JAVA_VERSION=8.0.462 JAVA_HOME=/usr/java/openjdk-8
 ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
 RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
     mkdir -p ${JAVA_HOME} && \
