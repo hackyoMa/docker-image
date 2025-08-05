@@ -1,4 +1,4 @@
-name: jre-8
+name: jre-8-fit2cloud
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/jre:8
+          tags: hackyo/jre:8-fit2cloud
