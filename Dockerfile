@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:latest
 FROM debian:bookworm-slim
-LABEL maintainer="137120918@qq.com" version="20250721"
+LABEL maintainer="137120918@qq.com" version="20250806"
 ENV LANG=C.utf8
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
     apt update -y && apt upgrade -y && \
