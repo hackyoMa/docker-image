@@ -13,7 +13,7 @@ RUN set -eux; \
       "linux/arm64") arch="aarch64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p ${JAVA_HOME}; \
+    mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u462-b08/OpenJDK8U-jdk_${arch}_linux_hotspot_8u462b08.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
