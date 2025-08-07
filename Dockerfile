@@ -20,7 +20,7 @@ RUN set -eux; \
     rm -rf "${tempDir}"; \
     npm config set prefix "${NODE_HOME}/node_global"; \
     npm config set cache "${NODE_HOME}/node_cache"; \
-    npm install -g npm; \
-    node -v;
+    node -v; \
+    npm -v
 
 CMD ["node", "-v"]
