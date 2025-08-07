@@ -19,6 +19,6 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    java -version; \
+    java -version
 
 CMD ["java", "-version"]
