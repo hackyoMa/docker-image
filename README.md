@@ -38,5 +38,3 @@ Use example: `docker pull hackyo/debian:bookworm-slim`
 - hackyo/keycloak
     - [26](https://github.com/hackyoMa/docker-image/blob/keycloak-26/Dockerfile)
     - Usage reference: [https://github.com/keycloak/keycloak/tree/main/quarkus/container](https://github.com/keycloak/keycloak/tree/main/quarkus/container)
-- hackyo/frps
-  - [0](https://github.com/hackyoMa/docker-image/blob/frps-0/Dockerfile)
