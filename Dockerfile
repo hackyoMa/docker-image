@@ -14,14 +14,13 @@ RUN set -eux; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://nodejs.org/dist/v22.18.0/node-v22.18.0-linux-${arch}.tar.xz"; \
+    tarUrl="https://nodejs.org/dist/v22.18.0/node-v22.18.0-linux-${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
     npm config set prefix "${NODE_HOME}/node_global"; \
     npm config set cache "${NODE_HOME}/node_cache"; \
     npm install -g npm; \
-    node -v; \
-    npm -v
+    node -v;
 
 CMD ["node", "-v"]
