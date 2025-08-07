@@ -1,14 +1,24 @@
-# syntax=docker/dockerfile:latest
+# syntax=docker/dockerfile:1
 FROM hackyo/debian:bookworm-slim
-LABEL maintainer="137120918@qq.com" version="20250721"
+
+LABEL maintainer="137120918@qq.com" version="20250806"
+
 ARG TARGETPLATFORM
-ENV ZULU_VERSION=17.60.17 JAVA_VERSION=17.0.16 JAVA_HOME=/usr/java/openjdk-17
-ENV CLASSPATH=${JAVA_HOME}/lib PATH=${PATH}:${JAVA_HOME}/bin
-RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then DOWNLOAD_ARCH="x64"; else DOWNLOAD_ARCH="aarch64"; fi && \
-    mkdir -p ${JAVA_HOME} && \
-    curl -L https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}.tar.gz -o ${JAVA_HOME}/jdk.tar.gz && \
-    tar -xf ${JAVA_HOME}/jdk.tar.gz -C ${JAVA_HOME} && \
-    mv ${JAVA_HOME}/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${DOWNLOAD_ARCH}/* ${JAVA_HOME}/ && \
-    ${JAVA_HOME}/bin/jlink --module-path ${JAVA_HOME}/jmods --add-modules ALL-MODULE-PATH --output /usr/local/jre && \
-    rm -rf ${JAVA_HOME} && mv /usr/local/jre ${JAVA_HOME}
+ENV JAVA_HOME="/usr/local/openjdk-17"
+ENV PATH="${PATH}:${JAVA_HOME}/bin"
+
+RUN set -eux; \
+    case "${TARGETPLATFORM}" in \
+      "linux/amd64") arch="x64" ;; \
+      "linux/arm64") arch="aarch64" ;; \
+      *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
+    esac; \
+    mkdir -p ${JAVA_HOME}; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jdk_${arch}_linux_hotspot_17.0.16_8.tar.gz"; \
+    curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
+    rm -rf "${tempDir}"; \
+    java -version
+
 CMD ["java", "-version"]
