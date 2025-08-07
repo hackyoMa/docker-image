@@ -1,6 +1,7 @@
-# syntax=docker/dockerfile:latest
+# syntax=docker/dockerfile:1
 FROM amd64/buildpack-deps:buster-curl as installer
-LABEL maintainer="137120918@qq.com" version="20250721"
+
+LABEL maintainer="137120918@qq.com" version="20250806"
 
 ARG NACOS_VERSION=2.5.1
 ARG HOT_FIX_FLAG=""
@@ -20,14 +21,15 @@ ENV MODE="cluster" \
     CLUSTER_CONF="/home/nacos/conf/cluster.conf" \
     FUNCTION_MODE="all" \
     NACOS_USER="nacos" \
-    JAVA="/usr/java/openjdk-8/bin/java" \
+    JAVA="/usr/local/openjdk-8/bin/java" \
     JVM_XMS="1g" \
     JVM_XMX="1g" \
     JVM_XMN="512m" \
     JVM_MS="128m" \
     JVM_MMS="320m" \
     NACOS_DEBUG="n" \
-    TOMCAT_ACCESSLOG_ENABLED="false"
+    TOMCAT_ACCESSLOG_ENABLED="false" \
+    TZ="Asia/Shanghai"
 
 WORKDIR $BASE_DIR
 
