@@ -1,8 +1,9 @@
-# syntax=docker/dockerfile:latest
+# syntax=docker/dockerfile:1
 FROM hackyo/jdk:21
-LABEL maintainer="137120918@qq.com" version="20250721"
 
-ARG KEYCLOAK_VERSION=26.3.1
+LABEL maintainer="137120918@qq.com" version="20250806"
+
+ARG KEYCLOAK_VERSION=26.3.2
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
 
 ADD $KEYCLOAK_DIST /tmp/keycloak/
