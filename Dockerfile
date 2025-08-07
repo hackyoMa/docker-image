@@ -1,17 +1,24 @@
+# syntax=docker/dockerfile:1
 FROM hackyo/debian:bookworm-slim
+
 LABEL maintainer="137120918@qq.com" version="20250806"
+
 ARG TARGETPLATFORM
-ARG JAVA_ARCH="aarch64"
-ENV JAVA_VERSION=8u461 JAVA_HOME=/usr/local/openjdk-8
-ENV PATH=${PATH}:${JAVA_HOME}/bin
-RUN if [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-      JAVA_ARCH="x64"; \
-    else \
-      JAVA_ARCH="aarch64"; \
-    fi;
-ADD jdk-${JAVA_VERSION}-linux-${JAVA_ARCH}.tar.gz ${JAVA_HOME}
-RUN mv ${JAVA_HOME}/* ${JAVA_HOME}/tmp/ \
-    && mv ${JAVA_HOME}/tmp/* ${JAVA_HOME}/ \
-    && rmdir ${JAVA_HOME}/tmp \
-    && java -version
+ENV JAVA_HOME="/usr/local/openjdk-8"
+ENV PATH="${PATH}:${JAVA_HOME}/bin"
+
+RUN set -eux; \
+    case "${TARGETPLATFORM}" in \
+      "linux/amd64") arch="x64" ;; \
+      "linux/arm64") arch="aarch64" ;; \
+      *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
+    esac; \
+    mkdir -p ${JAVA_HOME}; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u462-b08/OpenJDK8U-jdk_${arch}_linux_hotspot_8u462b08.tar.gz"; \
+    curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
+    rm -rf "${tempDir}"; \
+    java -version; \
+
 CMD ["java", "-version"]
