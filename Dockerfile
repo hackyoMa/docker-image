@@ -13,7 +13,7 @@ RUN set -eux; \
       "linux/arm64") arch="aarch64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p ${JAVA_HOME}; \
+    mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jre_${arch}_linux_hotspot_11.0.28_6.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
