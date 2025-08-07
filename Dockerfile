@@ -1,12 +1,19 @@
-# syntax=docker/dockerfile:latest
+# syntax=docker/dockerfile:1
 FROM hackyo/jdk:17
-LABEL maintainer="137120918@qq.com" version="20250721"
-ENV MAVEN_VERSION=3.9.11 MAVEN_HOME=/usr/share/maven
-ENV PATH=${PATH}:${MAVEN_HOME}/bin
-RUN mkdir ${MAVEN_HOME} && mkdir ${MAVEN_HOME}/repo && \
-    curl -L https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o ${MAVEN_HOME}/maven.tar.gz && \
-    tar -xf ${MAVEN_HOME}/maven.tar.gz -C ${MAVEN_HOME} && \
-    mv ${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}/* ${MAVEN_HOME}/ && \
-    rm -r ${MAVEN_HOME}/apache-maven-${MAVEN_VERSION} ${MAVEN_HOME}/maven.tar.gz
-COPY settings.xml ${MAVEN_HOME}/conf/settings.xml
+
+LABEL maintainer="137120918@qq.com" version="20250806"
+
+ENV MAVEN_HOME="/usr/share/maven"
+ENV PATH="${PATH}:${MAVEN_HOME}/bin"
+
+RUN set -eux; \
+    mkdir -p ${MAVEN_HOME}; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz"; \
+    curl -fL -o "${tempDir}/maven.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/maven.tar.gz" -C "${MAVEN_HOME}" --strip-components 1; \
+    rm -rf "${tempDir}"; \
+    mvn -v
+COPY settings.xml "${MAVEN_HOME}/conf/settings.xml"
+
 CMD ["mvn", "-v"]
