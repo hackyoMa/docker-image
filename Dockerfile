@@ -13,7 +13,7 @@ RUN set -eux; \
       "linux/arm64") arch="aarch64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p ${JAVA_HOME}; \
+    mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.8%2B9/OpenJDK21U-jdk_${arch}_linux_hotspot_21.0.8_9.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
