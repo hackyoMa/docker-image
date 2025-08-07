@@ -13,7 +13,7 @@ RUN set -eux; \
       "linux/arm64") arch="aarch64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p ${JAVA_HOME}; \
+    mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.16%2B8/OpenJDK17U-jre_${arch}_linux_hotspot_17.0.16_8.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
