@@ -15,11 +15,13 @@ Use example: `docker pull hackyo/debian:trixie-slim`
     - [11](https://github.com/hackyoMa/docker-image/blob/jdk-11/Dockerfile)
     - [17](https://github.com/hackyoMa/docker-image/blob/jdk-17/Dockerfile)
     - [21](https://github.com/hackyoMa/docker-image/blob/jdk-21/Dockerfile)
+    - [25](https://github.com/hackyoMa/docker-image/blob/jdk-25/Dockerfile)
 - hackyo/jre
     - [8](https://github.com/hackyoMa/docker-image/blob/jre-8/Dockerfile)
     - [11](https://github.com/hackyoMa/docker-image/blob/jre-11/Dockerfile)
     - [17](https://github.com/hackyoMa/docker-image/blob/jre-17/Dockerfile)
     - [21](https://github.com/hackyoMa/docker-image/blob/jre-21/Dockerfile)
+    - [25](https://github.com/hackyoMa/docker-image/blob/jre-25/Dockerfile)
 - hackyo/nacos
     - [2](https://github.com/hackyoMa/docker-image/blob/nacos-2/Dockerfile)
     - [3](https://github.com/hackyoMa/docker-image/blob/nacos-3/Dockerfile)
@@ -29,6 +31,7 @@ Use example: `docker pull hackyo/debian:trixie-slim`
     - [3.9-jdk-11](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-11/Dockerfile)
     - [3.9-jdk-17](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-17/Dockerfile)
     - [3.9-jdk-21](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-21/Dockerfile)
+    - [3.9-jdk-25](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-25/Dockerfile)
 - hackyo/node
     - [22](https://github.com/hackyoMa/docker-image/blob/node-22/Dockerfile)
 - hackyo/sentinel
