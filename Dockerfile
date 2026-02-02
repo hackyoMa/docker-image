@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20250903"
+LABEL maintainer="137120918@qq.com" version="20260202"
 
 ARG TARGETPLATFORM
 ENV JAVA_HOME="/usr/local/openjdk-8"
