@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM amd64/buildpack-deps:buster-curl as installer
 
-LABEL maintainer="137120918@qq.com" version="20250903"
+LABEL maintainer="137120918@qq.com" version="20260202"
 
-ARG NACOS_VERSION=3.0.3
+ARG NACOS_VERSION=3.1.1
 ARG HOT_FIX_FLAG=""
 
 RUN set -x \
@@ -48,4 +48,5 @@ RUN mkdir -p logs \
 RUN chmod +x bin/docker-startup.sh
 
 EXPOSE 8848
+EXPOSE 9848 8080
 ENTRYPOINT ["bin/docker-startup.sh"]
