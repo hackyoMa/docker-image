@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20250903"
+LABEL maintainer="137120918@qq.com" version="20260202"
 
 ARG TARGETPLATFORM
 ENV PYTHONUNBUFFERED=1
@@ -28,7 +28,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${UV_INSTALL_DIR}"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/astral-sh/uv/releases/download/0.8.17/uv-${arch}-unknown-linux-gnu.tar.gz"; \
+    tarUrl="https://github.com/astral-sh/uv/releases/download/0.9.28/uv-${arch}-unknown-linux-gnu.tar.gz"; \
     curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${UV_INSTALL_DIR}" --strip-components 1; \
     rm -rf "${tempDir}"; \
