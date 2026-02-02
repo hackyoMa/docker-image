@@ -15,7 +15,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u462-b08/OpenJDK8U-jdk_${arch}_linux_hotspot_8u462b08.tar.gz"; \
+    tarUrl="https://cdn.azul.com/zulu/bin/zulu8.92.0.19-ca-jdk8.0.482-linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
