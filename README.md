@@ -33,7 +33,7 @@ Use example: `docker pull hackyo/debian:trixie-slim`
     - [3.9-jdk-21](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-21/Dockerfile)
     - [3.9-jdk-25](https://github.com/hackyoMa/docker-image/blob/maven-3.9-jdk-25/Dockerfile)
 - hackyo/node
-    - [22](https://github.com/hackyoMa/docker-image/blob/node-22/Dockerfile)
+    - [24](https://github.com/hackyoMa/docker-image/blob/node-24/Dockerfile)
 - hackyo/sentinel
     - [1.8](https://github.com/hackyoMa/docker-image/blob/sentinel-1.8/Dockerfile)
 - hackyo/zipkin
@@ -42,4 +42,4 @@ Use example: `docker pull hackyo/debian:trixie-slim`
     - [26](https://github.com/hackyoMa/docker-image/blob/keycloak-26/Dockerfile)
     - Usage reference: [https://github.com/keycloak/keycloak/tree/main/quarkus/container](https://github.com/keycloak/keycloak/tree/main/quarkus/container)
 - hackyo/uv
-    - [0.8](https://github.com/hackyoMa/docker-image/blob/uv-0.8/Dockerfile)
+    - [0](https://github.com/hackyoMa/docker-image/blob/uv-0/Dockerfile)
