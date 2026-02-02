@@ -1,4 +1,4 @@
-name: node-22
+name: node-24
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/node:22
+          tags: hackyo/node:24
