@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM hackyo/jre:21
+FROM hackyo/jre:25
 
-LABEL maintainer="137120918@qq.com" version="20250903"
+LABEL maintainer="137120918@qq.com" version="20260202"
 
 ENV JAVA_OPTS=""
 
