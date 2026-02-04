@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/jdk:21
 
-LABEL maintainer="137120918@qq.com" version="20260202"
+LABEL maintainer="137120918@qq.com" version="20260204"
 
 ARG KEYCLOAK_VERSION=26.5.2
 ARG KEYCLOAK_DIST=https://github.com/keycloak/keycloak/releases/download/$KEYCLOAK_VERSION/keycloak-$KEYCLOAK_VERSION.tar.gz
