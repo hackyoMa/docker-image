@@ -8,11 +8,14 @@ ENV LANG=C.UTF-8 \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+COPY docker-entrypoint.sh /usr/local/bin/
+
 RUN set -eux; \
     ln -snf /usr/share/zoneinfo/"${TZ}" /etc/localtime; \
     echo "${TZ}" > /etc/timezone; \
     apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd; \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd gosu; \
+    rm -rf /var/lib/apt/lists/*; \
+    chmod +x /usr/local/bin/docker-entrypoint.sh
 
 CMD ["bash"]
