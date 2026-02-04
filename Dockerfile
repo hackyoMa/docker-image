@@ -5,7 +5,7 @@ LABEL maintainer="137120918@qq.com" version="20260204"
 
 ARG TARGETPLATFORM
 ENV NODE_HOME="/usr/local"
-ENV PATH="${NODE_HOME}/node_global/bin:${NODE_HOME}/bin:${PATH}"
+ENV PATH="${NODE_HOME}/bin:${PATH}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -18,8 +18,6 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    npm config set prefix "${NODE_HOME}/node_global"; \
-    npm config set cache "${NODE_HOME}/node_cache"; \
     node -v; \
     npm -v
 
