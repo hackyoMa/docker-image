@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ "$(id -u)" = "0" ]; then
-  GROUP_ID=${PGID:-1000}
-  USER_ID=${PUID:-1000}
+  GROUP_ID=${PGID:-800}
+  USER_ID=${PUID:-800}
   WORKDIR="${WORKDIR:-$(pwd)}"
 
   GROUP_INFO=$(getent group "${GROUP_ID}" || true)
