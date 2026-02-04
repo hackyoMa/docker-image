@@ -16,4 +16,4 @@ RUN set -eux; \
     mvn -v
 COPY settings.xml "${MAVEN_HOME}/conf/settings.xml"
 
-CMD ["mvn", "-v"]
+CMD ["mvn"]
