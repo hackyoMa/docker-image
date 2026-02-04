@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/jre:8
 
-LABEL maintainer="137120918@qq.com" version="20260202"
+LABEL maintainer="137120918@qq.com" version="20260204"
 
 ARG TARGETPLATFORM
 ENV JAVA_APP_DIR="/deployments" JAVA_MAJOR_VERSION=8 JAVA_OPTIONS="-Dfile.encoding=utf-8"
