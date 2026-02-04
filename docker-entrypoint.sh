@@ -3,7 +3,6 @@
 if [ "$(id -u)" = "0" ]; then
   GROUP_ID=${PGID:-9999}
   USER_ID=${PUID:-9999}
-  WORKDIR="${WORKDIR:-$(pwd)}"
 
   GROUP_INFO=$(getent group "${GROUP_ID}" || true)
   if [ -z "${GROUP_INFO}" ]; then
@@ -25,13 +24,12 @@ if [ "$(id -u)" = "0" ]; then
     usermod -aG "${GROUP_NAME}" "${USER_NAME}"
   fi
 
-  chown --quiet -R "${USER_NAME}:${GROUP_NAME}" "${WORKDIR}"
-
   exec gosu "${USER_NAME}" "$@"
 else
-  if [ -z "${HOME}" ]; then
-    export HOME=$(getent passwd "$(id -u)" | cut -d: -f6)
+  USER_HOME="/home/$(whoami)"
+  if [ ! -d "${USER_HOME}" ]; then
+    mkdir -p "${USER_HOME}"
   fi
-
+  export HOME="${USER_HOME}"
   exec "$@"
 fi

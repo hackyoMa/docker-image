@@ -16,6 +16,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd gosu; \
     rm -rf /var/lib/apt/lists/*; \
-    chmod +x /usr/local/bin/docker-entrypoint.sh
+    chmod +x /usr/local/bin/docker-entrypoint.sh; \
+    chmod 1777 /home
 
 CMD ["bash"]
