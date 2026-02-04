@@ -21,4 +21,4 @@ RUN set -eux; \
     rm -rf "${tempDir}"; \
     java -version
 
-CMD ["java", "-version"]
+CMD ["java"]
