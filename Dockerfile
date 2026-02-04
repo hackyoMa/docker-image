@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20260202"
+LABEL maintainer="137120918@qq.com" version="20260204"
 
 ARG TARGETPLATFORM
 ENV NODE_HOME="/usr/local"
@@ -23,4 +23,4 @@ RUN set -eux; \
     node -v; \
     npm -v
 
-CMD ["node", "-v"]
+CMD ["node"]
