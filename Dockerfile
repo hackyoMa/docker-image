@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM amd64/buildpack-deps:buster-curl as installer
 
-LABEL maintainer="137120918@qq.com" version="20260202"
+LABEL maintainer="137120918@qq.com" version="20260204"
 
 ARG NACOS_VERSION=2.5.2
 ARG HOT_FIX_FLAG=""
