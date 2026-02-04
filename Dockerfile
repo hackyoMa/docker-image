@@ -12,7 +12,7 @@ RUN set -eux; \
     ln -snf /usr/share/zoneinfo/"${TZ}" /etc/localtime; \
     echo "${TZ}" > /etc/timezone; \
     apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat; \
+    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd; \
     rm -rf /var/lib/apt/lists/*
 
 CMD ["bash"]
