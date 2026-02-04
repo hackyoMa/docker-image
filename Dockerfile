@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/jdk:11
 
-LABEL maintainer="137120918@qq.com" version="20260202"
+LABEL maintainer="137120918@qq.com" version="20260204"
 
 ENV MAVEN_HOME="/usr/share/maven"
 ENV PATH="${MAVEN_HOME}/bin:${PATH}"
