@@ -14,6 +14,5 @@ RUN set -eux; \
     tar -xf "${tempDir}/maven.tar.gz" -C "${MAVEN_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
     mvn -v
-COPY settings.xml "${MAVEN_HOME}/conf/settings.xml"
 
 CMD ["mvn"]
