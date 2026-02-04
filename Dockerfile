@@ -14,4 +14,4 @@ HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl 
 EXPOSE 8080
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["java ${JAVA_OPTS} -jar /opt/app/app.jar"]
+CMD java ${JAVA_OPTS} -jar /opt/app/app.jar
