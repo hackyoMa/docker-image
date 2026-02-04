@@ -29,5 +29,9 @@ if [ "$(id -u)" = "0" ]; then
 
   exec gosu "${USER_NAME}" "$@"
 else
+  if [ -z "${HOME}" ]; then
+    export HOME=$(getent passwd "$(id -u)" | cut -d: -f6)
+  fi
+
   exec "$@"
 fi
