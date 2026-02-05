@@ -21,19 +21,11 @@ create_user_if_needed() {
 
   if [ -z "${user_info}" ]; then
     local user_name="dynamic_user_${user_id}"
-    useradd -m -u "${user_id}" -g "${group_id}" "${user_name}"
+    useradd -u "${user_id}" -g "${group_id}" "${user_name}"
     echo "${user_name}"
   else
     echo "${user_info%%:*}"
   fi
-}
-
-get_home_dir() {
-  local user_id="${1}"
-  local user_name="${2}"
-  local user_info=$(getent passwd "${user_id}" || true)
-  local home_dir=$(echo "${user_info}" | cut -d: -f6)
-  echo "${home_dir:-/home/${user_name}}"
 }
 
 main() {
@@ -45,7 +37,6 @@ main() {
 
     local group_name=$(create_group_if_needed "${group_id}")
     local user_name=$(create_user_if_needed "${group_id}" "${user_id}")
-    export HOME=$(get_home_dir "${user_id}" "${user_name}")
 
     if ! id -nG "${user_name}" | grep -qw "${group_name}"; then
       usermod -aG "${group_name}" "${user_name}"
@@ -53,10 +44,10 @@ main() {
 
     cmd=(gosu "${user_name}" "$@")
   else
-    export HOME=$(get_home_dir "$(id -u)" "$(whoami)")
     cmd=("$@")
   fi
 
+  export HOME="/data"
   if [ -n "${SUB_CONTAINER_INIT:-}" ] && [ -x "${SUB_CONTAINER_INIT}" ]; then
     exec "${SUB_CONTAINER_INIT}" "${cmd[@]}"
   else
