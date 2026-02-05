@@ -58,10 +58,10 @@ main() {
   fi
 
   if [ -n "${SUB_CONTAINER_INIT:-}" ] && [ -x "${SUB_CONTAINER_INIT}" ]; then
-    "${SUB_CONTAINER_INIT}"
+    exec "${SUB_CONTAINER_INIT}" "${cmd[@]}"
+  else
+    exec "${cmd[@]}"
   fi
-
-  exec "${cmd[@]}"
 }
 
 main "$@"
