@@ -42,7 +42,7 @@ main() {
       usermod -aG "${group_name}" "${user_name}"
     fi
 
-    cmd=(gosu "${user_name}" "$@")
+    cmd=(gosu "${user_name}" env HOME="/data" "$@")
   else
     cmd=("$@")
   fi
