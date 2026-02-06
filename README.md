@@ -43,3 +43,5 @@ Use example: `docker pull hackyo/debian:trixie-slim`
     - Usage reference: [https://github.com/keycloak/keycloak/tree/main/quarkus/container](https://github.com/keycloak/keycloak/tree/main/quarkus/container)
 - hackyo/uv
     - [0](https://github.com/hackyoMa/docker-image/blob/uv-0/Dockerfile)
+- hackyo/claude-code-router
+    - [2](https://github.com/hackyoMa/docker-image/blob/claude-code-router-2/Dockerfile)
