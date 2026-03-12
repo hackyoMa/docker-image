@@ -1,0 +1,26 @@
+# syntax=docker/dockerfile:1
+FROM hackyo/node:24
+
+LABEL maintainer="137120918@qq.com" version="20260312"
+
+ENV NPM_CONFIG_REGISTRY="https://registry.npmmirror.com"
+ENV SUB_CONTAINER_INIT="/usr/local/bin/openclaw-container-init.sh"
+
+COPY openclaw-container-init.sh /usr/local/bin/
+
+RUN set -eux; \
+    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends git; \
+    rm -rf /var/lib/apt/lists/*; \
+    npm install -g openclaw@2026.3.11; \
+    npm cache clean --force; \
+    chmod +x /usr/local/bin/openclaw-container-init.sh; \
+    openclaw --version
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:18789/ || exit 1
+
+EXPOSE 18789
+
+ENTRYPOINT ["container-init.sh"]
+CMD openclaw gateway --port 18789
