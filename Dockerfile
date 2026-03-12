@@ -15,5 +15,6 @@ HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl 
 
 EXPOSE 8080
 
-ENTRYPOINT ["container-init.sh"]
+USER appuser
+
 CMD java ${JAVA_OPTS} -jar /opt/app/app.jar
