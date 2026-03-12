@@ -13,6 +13,8 @@ RUN set -eux; \
     echo "${TZ}" > /etc/timezone; \
     apt-get update; \
     apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd vim gosu sudo; \
-    rm -rf /var/lib/apt/lists/* \
+    rm -rf /var/lib/apt/lists/*; \
+    groupadd -g 1000 appuser; \
+    useradd -m -u 1000 -g appuser appuser
 
 CMD ["bash"]
