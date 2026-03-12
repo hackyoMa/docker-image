@@ -17,5 +17,7 @@ HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl 
 
 EXPOSE 18789
 
-ENTRYPOINT ["gosu", "appuser"]
-CMD ["openclaw", "gateway", "--port", "18789"]
+USER appuser
+
+ENTRYPOINT ["openclaw"]
+CMD ["gateway", "--port", "18789"]
