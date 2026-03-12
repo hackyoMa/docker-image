@@ -19,5 +19,4 @@ EXPOSE 18789
 
 USER appuser
 
-ENTRYPOINT ["openclaw"]
-CMD ["gateway", "--port", "18789"]
+CMD ["openclaw", "gateway", "--port", "18789"]
