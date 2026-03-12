@@ -6,9 +6,6 @@ LABEL maintainer="137120918@qq.com" version="20260312"
 ARG TARGETPLATFORM
 ENV NODE_HOME="/usr/local"
 ENV PATH="${NODE_HOME}/bin:${PATH}"
-ENV SUB_CONTAINER_INIT="/usr/local/bin/node-container-init.sh"
-
-COPY node-container-init.sh /usr/local/bin/
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -21,7 +18,6 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    chmod +x /usr/local/bin/node-container-init.sh; \
     node -v; \
     npm -v
 
