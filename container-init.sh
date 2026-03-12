@@ -34,9 +34,13 @@ main() {
   if [ "$(id -u)" -eq 0 ]; then
     local group_id="${PGID:-9999}"
     local user_id="${PUID:-9999}"
-
     local group_name=$(create_group_if_needed "${group_id}")
     local user_name=$(create_user_if_needed "${group_id}" "${user_id}")
+
+    export CONTAINER_GROUP_ID="${group_id}"
+    export CONTAINER_USER_ID="${user_id}"
+    export CONTAINER_GROUP_NAME="${group_name}"
+    export CONTAINER_USER_NAME="${user_name}"
 
     if ! id -nG "${user_name}" | grep -qw "${group_name}"; then
       usermod -aG "${group_name}" "${user_name}"
@@ -44,6 +48,11 @@ main() {
 
     cmd=(gosu "${user_name}" env HOME="/data" "$@")
   else
+    export CONTAINER_GROUP_ID="$(id -g)"
+    export CONTAINER_USER_ID="$(id -u)"
+    export CONTAINER_GROUP_NAME="$(id -gn)"
+    export CONTAINER_USER_NAME="$(id -un)"
+
     cmd=("$@")
   fi
 

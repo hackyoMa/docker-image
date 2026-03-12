@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20260204"
+LABEL maintainer="137120918@qq.com" version="20260312"
 
 ENV LANG=C.UTF-8 \
     TZ=Asia/Shanghai
