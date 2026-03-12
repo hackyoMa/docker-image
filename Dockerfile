@@ -11,7 +11,7 @@ ADD https://repo1.maven.org/maven2/io/zipkin/zipkin-server/3.5.1/zipkin-server-3
 
 RUN chmod 644 /opt/app/app.jar
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:9411/ || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:9411/
 
 EXPOSE 9411
 
