@@ -3,13 +3,11 @@ FROM hackyo/node:24
 
 LABEL maintainer="137120918@qq.com" version="20260312"
 
-ENV NPM_CONFIG_REGISTRY="https://registry.npmmirror.com"
 ENV SUB_CONTAINER_INIT="/usr/local/bin/openclaw-container-init.sh"
 
 COPY openclaw-container-init.sh /usr/local/bin/
 
 RUN set -eux; \
-    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources; \
     apt-get update; \
     apt-get install -y --no-install-recommends git; \
     rm -rf /var/lib/apt/lists/*; \
