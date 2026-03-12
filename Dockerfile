@@ -14,7 +14,7 @@ RUN set -eux; \
     ln -snf /usr/share/zoneinfo/"${TZ}" /etc/localtime; \
     echo "${TZ}" > /etc/timezone; \
     apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd gosu; \
+    apt-get install -y --no-install-recommends ca-certificates procps iproute2 iputils-ping tcpdump curl netcat-openbsd vim gosu sudo; \
     rm -rf /var/lib/apt/lists/*; \
     chmod +x /usr/local/bin/container-init.sh; \
     mkdir /data; \
