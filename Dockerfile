@@ -11,7 +11,7 @@ ADD https://github.com/alibaba/Sentinel/releases/download/1.8.9/sentinel-dashboa
 
 RUN chmod 644 /opt/app/app.jar
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:8080/ || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:8080/
 
 EXPOSE 8080
 
