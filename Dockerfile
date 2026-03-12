@@ -16,7 +16,7 @@ RUN set -eux; \
     chmod +x /usr/local/bin/openclaw-container-init.sh; \
     openclaw --version
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fs -I -o /dev/null http://localhost:18789/ || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:18789/
 
 EXPOSE 18789
 
