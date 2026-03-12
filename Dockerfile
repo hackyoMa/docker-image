@@ -21,7 +21,7 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    chmod +x /usr/local/bin/container-init.sh; \
+    chmod +x /usr/local/bin/node-container-init.sh; \
     node -v; \
     npm -v
 
