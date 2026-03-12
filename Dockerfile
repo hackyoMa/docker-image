@@ -15,7 +15,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://cdn.azul.com/zulu/bin/zulu21.48.15-ca-jre21.0.10-linux_${arch}.tar.gz"; \
+    tarUrl="https://cdn.azul.com/zulu/bin/zulu21.48.17-ca-jre21.0.10-linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
