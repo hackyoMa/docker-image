@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20260204"
+LABEL maintainer="137120918@qq.com" version="20260312"
 
 ARG TARGETPLATFORM
 ENV JAVA_HOME="/usr/local/openjdk-25"
@@ -15,7 +15,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://cdn.azul.com/zulu/bin/zulu25.32.17-ca-jdk25.0.2-linux_${arch}.tar.gz"; \
+    tarUrl="https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
     rm -rf "${tempDir}"; \
