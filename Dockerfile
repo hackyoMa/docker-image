@@ -7,7 +7,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends git python3; \
     rm -rf /var/lib/apt/lists/*; \
-    npm install -g openclaw@2026.3.11; \
+    npm install -g openclaw@2026.3.13; \
     npm cache clean --force; \
     echo "appuser ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get" > /etc/sudoers.d/appuser_apt; \
     chmod 440 /etc/sudoers.d/appuser_apt; \
@@ -19,4 +19,5 @@ EXPOSE 18789
 
 USER appuser
 
-CMD ["openclaw", "gateway", "--port", "18789"]
+ENTRYPOINT ["openclaw"]
+CMD ["gateway", "--port", "18789"]
