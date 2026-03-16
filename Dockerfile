@@ -11,7 +11,8 @@ RUN set -eux; \
 
 USER appuser
 
-RUN npm install -g openclaw@2026.3.13; \
+RUN npm config set prefix "/home/appuser/.local"; \
+    npm install -g openclaw@2026.3.13; \
     npm cache clean --force; \
     openclaw --version
 
