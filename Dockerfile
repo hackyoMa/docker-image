@@ -15,6 +15,7 @@ USER appuser
 RUN npm config set prefix "/home/appuser/.local"; \
     npm install -g openclaw@2026.3.13; \
     npm cache clean --force; \
+    source /home/appuser/.profile; \
     openclaw --version
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:18789/
