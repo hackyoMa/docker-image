@@ -4,8 +4,6 @@ FROM hackyo/debian:trixie-slim
 LABEL maintainer="137120918@qq.com" version="20260312"
 
 ARG TARGETPLATFORM
-ENV NODE_HOME="/usr/local"
-ENV PATH="${NODE_HOME}/bin:${PATH}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -16,7 +14,7 @@ RUN set -eux; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
+    tar -xf "${tempDir}/node.tar.gz" -C "/usr/local" --strip-components 1; \
     rm -rf "${tempDir}"; \
     node -v; \
     npm -v
