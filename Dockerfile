@@ -6,7 +6,6 @@ LABEL maintainer="137120918@qq.com" version="20260312"
 ARG TARGETPLATFORM
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV UV_HOME="/usr/local/bin"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -17,7 +16,7 @@ RUN set -eux; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/astral-sh/uv/releases/download/0.10.9/uv-${arch}-unknown-linux-gnu.tar.gz"; \
     curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/uv.tar.gz" -C "${UV_HOME}" --strip-components 1; \
+    tar -xf "${tempDir}/uv.tar.gz" -C "/usr/local/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
     uv -V
 
