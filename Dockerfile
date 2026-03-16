@@ -5,7 +5,7 @@ LABEL maintainer="137120918@qq.com" version="20260312"
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git python3 python3-pip; \
+    apt-get install -y --no-install-recommends git python3 python3-pip ffmpeg; \
     rm -rf /var/lib/apt/lists/*; \
     echo "appuser ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get" > /etc/sudoers.d/appuser_apt; \
     chmod 440 /etc/sudoers.d/appuser_apt
