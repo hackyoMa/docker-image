@@ -15,7 +15,7 @@ USER appuser
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 RUN npm config set prefix "/home/appuser/.local"; \
-    npm install -g openclaw@2026.4.8 @larksuiteoapi/node-sdk@1.60.0 @slack/web-api@7.15.0 @buape/carbon@0.14.0; \
+    npm install -g openclaw@2026.4.8 @larksuiteoapi/node-sdk@1.60.0 @slack/web-api@7.15.0 @buape/carbon@0.14.0 grammy@1.42.0; \
     npm cache clean --force; \
     openclaw --version
 
