@@ -1,4 +1,4 @@
-name: openclaw-2026.3
+name: openclaw-2026
 on: push
 jobs:
   docker:
@@ -21,4 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hackyo/openclaw:2026.3
+          tags: hackyo/openclaw:2026
