@@ -15,7 +15,7 @@ USER appuser
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 RUN npm config set prefix "/home/appuser/.local"; \
-    npm install -g openclaw@2026.3.23-2; \
+    npm install -g openclaw@2026.4.8; \
     npm cache clean --force; \
     openclaw --version
 
