@@ -5,7 +5,10 @@ LABEL maintainer="137120918@qq.com" version="20260312"
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git python3 python3-pip libnspr4 libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libxcomposite1 libxdamage1 libatspi2.0-0t64; \
+    apt-get install -y --no-install-recommends git python3 python3-pip \
+      libnspr4 libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 \
+      libxcomposite1 libxdamage1 libatspi2.0-0t64 libxkbcommon0 libasound2t64 \
+      libgbm1 libcairo2 libpango-1.0-0 libxfixes3 libxrandr2; \
     rm -rf /var/lib/apt/lists/*; \
     echo "appuser ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get" > /etc/sudoers.d/appuser_apt; \
     chmod 440 /etc/sudoers.d/appuser_apt
