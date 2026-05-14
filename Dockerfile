@@ -1,20 +1,19 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/jre:25
 
-LABEL maintainer="137120918@qq.com" version="20260312"
+LABEL org.opencontainers.image.authors="hackyo" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/sentinel-1.8"
 
 ENV JAVA_OPTS=""
 
-WORKDIR /opt/app
+USER appuser
+WORKDIR /home/appuser
 
-ADD https://github.com/alibaba/Sentinel/releases/download/1.8.9/sentinel-dashboard-1.8.9.jar app.jar
-
-RUN chmod 644 /opt/app/app.jar
+RUN tarUrl="https://github.com/alibaba/Sentinel/releases/download/1.8.9/sentinel-dashboard-1.8.9.jar"; \
+    curl -fL -o app.jar "${tarUrl}"
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:8080/
-
 EXPOSE 8080
 
-USER appuser
-
-CMD java ${JAVA_OPTS} -jar /opt/app/app.jar
+CMD java ${JAVA_OPTS} -jar app.jar
