@@ -22,7 +22,7 @@ RUN set -eux; \
     curl -fL -o "/usr/bin/validator" "${validatorUrl}"; \
     chmod +x /usr/bin/validator; \
     curl -fL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash; \
-    mkdir -p "${JAVA_APP_DIR}" \
+    mkdir -p "${JAVA_APP_DIR}"
 
 COPY --chmod=755 run-java.sh "${JAVA_APP_DIR}"
 
