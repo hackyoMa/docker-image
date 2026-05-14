@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 
-ENV JAVA_HOME="/usr/local/openjdk-8" \
-    PATH="${JAVA_HOME}/bin:${PATH}"
+ENV JAVA_HOME="/usr/local/openjdk-8"
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -18,10 +18,24 @@ RUN set -eux; \
     esac; \
     mkdir -p "${JAVA_HOME}"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://cdn.azul.com/zulu/bin/zulu8.92.0.21-ca-jdk8.0.482-linux_${arch}.tar.gz"; \
+    tarUrl="https://cdn.azul.com/zulu/bin/zulu8.94.0.17-ca-jdk8.0.492-linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/jdk.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/jdk.tar.gz" -C "${JAVA_HOME}" --strip-components 1; \
-    rm -rf "${tempDir}"; \
+    rm -rf "${tempDir}" \
+           "${JAVA_HOME}/demo" \
+           "${JAVA_HOME}/ASSEMBLY_EXCEPTION" \
+           "${JAVA_HOME}/DISCLAIMER" \
+           "${JAVA_HOME}/LICENSE" \
+           "${JAVA_HOME}/man" \
+           "${JAVA_HOME}/readme.txt" \
+           "${JAVA_HOME}/release" \
+           "${JAVA_HOME}/sample" \
+           "${JAVA_HOME}/src.zip" \
+           "${JAVA_HOME}/THIRD_PARTY_README" \
+           "${JAVA_HOME}/Welcome.html" \
+           "${JAVA_HOME}/jre/ASSEMBLY_EXCEPTION" \
+           "${JAVA_HOME}/jre/LICENSE" \
+           "${JAVA_HOME}/jre/THIRD_PARTY_README"; \
     java -version
 
 CMD ["java"]
