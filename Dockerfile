@@ -1,10 +1,15 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/jre:8
 
-LABEL maintainer="137120918@qq.com" version="20260312"
+LABEL org.opencontainers.image.authors="hackyo" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/jre-8-fit2cloud"
 
 ARG TARGETPLATFORM
-ENV JAVA_APP_DIR="/deployments" JAVA_MAJOR_VERSION=8 JAVA_OPTIONS="-Dfile.encoding=utf-8"
+
+ENV JAVA_APP_DIR="/deployments" \
+    JAVA_MAJOR_VERSION=8 \
+    JAVA_OPTIONS="-Dfile.encoding=utf-8"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -17,7 +22,8 @@ RUN set -eux; \
     curl -fL -o "/usr/bin/validator" "${validatorUrl}"; \
     chmod +x /usr/bin/validator; \
     curl -fL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash; \
-    mkdir -p "${JAVA_APP_DIR}"
+    mkdir -p "${JAVA_APP_DIR}" \
+
 COPY --chmod=755 run-java.sh "${JAVA_APP_DIR}"
 
 CMD ["${JAVA_APP_DIR}/run-java.sh"]
