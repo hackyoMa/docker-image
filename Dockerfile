@@ -1,11 +1,14 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20260312"
+LABEL org.opencontainers.image.authors="hackyo" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/jdk-8"
 
 ARG TARGETPLATFORM
-ENV JAVA_HOME="/usr/local/openjdk-8"
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+ENV JAVA_HOME="/usr/local/openjdk-8" \
+    PATH="${JAVA_HOME}/bin:${PATH}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
