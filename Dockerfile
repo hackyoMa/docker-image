@@ -22,4 +22,4 @@ RUN set -eux; \
     groupadd -g 1000 appuser; \
     useradd -m -u 1000 -g appuser appuser
 
-CMD ["/bin/bash"]
+CMD ["bash"]
