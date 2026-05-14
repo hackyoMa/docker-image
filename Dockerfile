@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL maintainer="137120918@qq.com" version="20260312"
+LABEL org.opencontainers.image.authors="hackyo" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/node-24"
 
 ARG TARGETPLATFORM
 
@@ -12,10 +14,14 @@ RUN set -eux; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-${arch}.tar.gz"; \
+    tarUrl="https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "/usr/local" --strip-components 1; \
-    rm -rf "${tempDir}"; \
+    rm -rf "${tempDir}" \
+           "${JAVA_HOME}/CHANGELOG.md" \
+           "${JAVA_HOME}/LICENSE" \
+           "${JAVA_HOME}/README.md" \
+           "${JAVA_HOME}/share"; \
     node -v; \
     npm -v
 
