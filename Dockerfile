@@ -7,6 +7,8 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 
+ENV NODE_HOME="/usr/local"
+
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
       "linux/amd64") arch="x64" ;; \
@@ -16,12 +18,12 @@ RUN set -eux; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/node.tar.gz" -C "/usr/local" --strip-components 1; \
+    tar -xf "${tempDir}/node.tar.gz" -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${tempDir}" \
-           "${JAVA_HOME}/CHANGELOG.md" \
-           "${JAVA_HOME}/LICENSE" \
-           "${JAVA_HOME}/README.md" \
-           "${JAVA_HOME}/share"; \
+           "${NODE_HOME}/CHANGELOG.md" \
+           "${NODE_HOME}/LICENSE" \
+           "${NODE_HOME}/README.md" \
+           "${NODE_HOME}/share"; \
     node -v; \
     npm -v
 
