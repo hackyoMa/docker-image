@@ -77,6 +77,7 @@ RUN set -eux; \
     ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
     curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash -s -- --skip-setup; \
+    rm -rf /home/appuser/.hermes/hermes-agent/.git; \
     uv cache clean --force; \
     npm cache clean --force; \
     rm -rf /tmp/*
