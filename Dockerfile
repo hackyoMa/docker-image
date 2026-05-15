@@ -1,44 +1,82 @@
 # syntax=docker/dockerfile:1
-FROM hackyo/node:24
+FROM hackyo/debian:trixie-slim
 
 LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.version="1.0.0" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/openclaw-2026"
 
+ARG TARGETPLATFORM
+ARG UV_VERSION=0.11.14
+ARG PYTHON_VERSION=3.14
+ARG NODE_VERSION=24.15.0
+ARG HIMALAYA_VERSION=1.2.0
+ARG OPENCLAW_VERSION=2026.5.7
+ARG CLAWHUB_VERSION=0.15.0
+ARG PLAYWRIGHT_VERSION=1.60.0
+ARG MCPORTER_VERSION=0.11.1
+ARG CHROMIUM_VERSION=1223
+ARG FFMPEG_VERSION=1011
+
+ENV RUNTIME_HOME="/home/appuser/.local"
+ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
+
+WORKDIR /home/appuser
+USER appuser
+
+RUN set -eux; \
+    mkdir -p "${RUNTIME_HOME}/bin"; \
+    case "${TARGETPLATFORM}" in \
+      "linux/amd64") arch="x86_64" ;; \
+      "linux/arm64") arch="aarch64" ;; \
+      *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
+    esac; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz"; \
+    curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
+    rm -rf "${tempDir}"; \
+    uv python install "${PYTHON_VERSION}"; \
+    uv cache clean --force; \
+    ln -s "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}" "${RUNTIME_HOME}/bin/python3"; \
+    python3 -V; \
+    uv -V; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${arch}.tar.gz"; \
+    curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/node.tar.gz" -C "${RUNTIME_HOME}" --strip-components 1; \
+    rm -rf "${tempDir}" \
+           "${RUNTIME_HOME}/CHANGELOG.md" \
+           "${RUNTIME_HOME}/LICENSE" \
+           "${RUNTIME_HOME}/README.md" \
+           "${RUNTIME_HOME}/share"; \
+    node -v; \
+    npm -v; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
+    curl -fL -o "${tempDir}/himalaya.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/himalaya.tar.gz" -C "${tempDir}"; \
+    mv "${tempDir}/himalaya" "${RUNTIME_HOME}/bin/"; \
+    rm -rf "${tempDir}"; \
+    himalaya --version; \
+    npm install -g "openclaw@${OPENCLAW_VERSION}" "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}"; \
+    npm cache clean --force
+
+USER root
+
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git python3 python3-pip \
-      at-spi2-common fontconfig fontconfig-config fonts-freefont-ttf fonts-ipafont-gothic \
-      fonts-liberation fonts-noto-color-emoji fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei \
-      libasound2-data libasound2t64 libatk-bridge2.0-0t64 libatk1.0-0t64 libatomic1 libatspi2.0-0t64 \
-      libavahi-client3 libavahi-common-data libavahi-common3 libcairo2 libcups2t64 libdatrie1 libdrm-amdgpu1 \
-      libdrm-common libdrm2 libedit2 libfontconfig1 libfontenc1 libfreetype6 libfribidi0 libgbm1 libgl1 \
-      libgl1-mesa-dri libglib2.0-0t64 libglvnd0 libglx-mesa0 libglx0 libgraphite2-3 libharfbuzz0b libice6 \
-      libllvm19 libnspr4 libnss3 libpango-1.0-0 libpixman-1-0 libpng16-16t64 libsensors-config libsensors5 \
-      libsm6 libthai-data libthai0 libunwind8 libvulkan1 libwayland-server0 libx11-6 libx11-data libx11-xcb1 \
-      libxau6 libxaw7 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0 libxcb-render0 libxcb-shm0 \
-      libxcb-sync1 libxcb-xfixes0 libxcb1 libxcomposite1 libxdamage1 libxdmcp6 libxext6 libxfixes3 libxfont2 \
-      libxi6 libxkbcommon0 libxkbfile1 libxml2 libxmu6 libxpm4 libxrandr2 libxrender1 libxshmfence1 libxt6t64 \
-      libxxf86vm1 libz3-4 mesa-libgallium x11-common x11-xkb-utils xfonts-encodings xfonts-scalable xfonts-utils \
-      xkb-data xserver-common xvfb; \
+    apt-get install -y --no-install-recommends git; \
+    playwright install-deps chromium; \
     apt-get clean; \
-    rm -rf /var/lib/apt/lists/*; \
-    echo "appuser ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/apt-get" > /etc/sudoers.d/appuser_apt; \
-    chmod 440 /etc/sudoers.d/appuser_apt
+    rm -rf /var/lib/apt/lists/*
 
 USER appuser
-WORKDIR /home/appuser
-
-ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 RUN set -eux; \
-    npm config set prefix "/home/appuser/.local"; \
-    npm install -g playwright@1.60.0 openclaw@2026.5.7; \
-    npm cache clean --force; \
     playwright install chromium; \
-    ln -s /home/appuser/.cache/ms-playwright/chromium-1223/chrome-linux/chrome /home/appuser/.local/bin/chromium; \
-    ln -s /home/appuser/.cache/ms-playwright/ffmpeg-1011/ffmpeg-linux  /home/appuser/.local/bin/ffmpeg; \
-    openclaw --version
+    ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
+    rm -rf /tmp
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:18789/
 EXPOSE 18789
