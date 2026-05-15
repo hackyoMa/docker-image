@@ -76,9 +76,9 @@ USER appuser
 RUN set -eux; \
     playwright install chromium; \
     ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"
+    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
+    rm -rf /tmp/*
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:18789/
-EXPOSE 18789
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD openclaw gateway health | grep -A1 'Gateway Health' | grep -q 'OK'
 
-CMD openclaw gateway --port 18789
+CMD openclaw gateway
