@@ -26,8 +26,8 @@ USER appuser
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin"; \
     case "${TARGETPLATFORM}" in \
-      "linux/amd64") arch="x86_64" ;; \
-      "linux/arm64") arch="aarch64" ;; \
+      "linux/amd64") arch="x86_64"; node_arch="x64" ;; \
+      "linux/arm64") arch="aarch64"; node_arch="arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     tempDir="$(mktemp -d)"; \
