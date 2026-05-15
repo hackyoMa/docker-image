@@ -6,19 +6,19 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/openclaw-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.14
-ARG PYTHON_VERSION=3.14
-ARG NODE_VERSION=24.15.0
-ARG HIMALAYA_VERSION=1.2.0
-ARG OPENCLAW_VERSION=2026.5.7
-ARG CLAWHUB_VERSION=0.15.0
-ARG PLAYWRIGHT_VERSION=1.60.0
-ARG MCPORTER_VERSION=0.11.1
-ARG CHROMIUM_VERSION=1223
-ARG FFMPEG_VERSION=1011
+export UV_VERSION=0.11.14
+export PYTHON_VERSION=3.14
+export NODE_VERSION=24.15.0
+export HIMALAYA_VERSION=1.2.0
+export OPENCLAW_VERSION=2026.5.7
+export CLAWHUB_VERSION=0.15.0
+export PLAYWRIGHT_VERSION=1.60.0
+export MCPORTER_VERSION=0.11.1
+export CHROMIUM_VERSION=1223
+export FFMPEG_VERSION=1011
 
-ENV RUNTIME_HOME="/home/appuser/.local"
-ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
+export RUNTIME_HOME="/home/appuser/.local"
+export PATH="${RUNTIME_HOME}/bin:${PATH}"
 
 WORKDIR /home/appuser
 USER appuser
@@ -41,7 +41,7 @@ RUN set -eux; \
     python3 -V; \
     uv -V; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${arch}.tar.gz"; \
+    tarUrl="https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${node_arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${RUNTIME_HOME}" --strip-components 1; \
     rm -rf "${tempDir}" \
