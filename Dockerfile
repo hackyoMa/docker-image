@@ -32,16 +32,6 @@ RUN set -eux; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz"; \
-    curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
-    rm -rf "${tempDir}"; \
-    uv python install "${PYTHON_VERSION}"; \
-    uv cache clean --force; \
-    ln -s "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}" "${RUNTIME_HOME}/bin/python3"; \
-    python3 -V; \
-    uv -V; \
-    tempDir="$(mktemp -d)"; \
     tarUrl="https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${node_arch}.tar.gz"; \
     curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/node.tar.gz" -C "${RUNTIME_HOME}" --strip-components 1; \
@@ -52,6 +42,16 @@ RUN set -eux; \
            "${RUNTIME_HOME}/share"; \
     node -v; \
     npm -v; \
+    tempDir="$(mktemp -d)"; \
+    tarUrl="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz"; \
+    curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
+    tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
+    rm -rf "${tempDir}"; \
+    uv python install "${PYTHON_VERSION}"; \
+    uv cache clean --force; \
+    ln -s "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}" "${RUNTIME_HOME}/bin/python3"; \
+    python3 -V; \
+    uv -V; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
     curl -fL -o "${tempDir}/himalaya.tar.gz" "${tarUrl}"; \
