@@ -75,9 +75,12 @@ USER appuser
 RUN set -eux; \
     playwright install chromium; \
     ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"
+    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
+    curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash -s -- --skip-setup; \
+    uv cache clean --force; \
+    npm cache clean --force; \
+    rm -rf /tmp/*
 
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 CMD curl -fsI -o /dev/null http://localhost:18789/
-EXPOSE 18789
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep -A1 'Gateway Service' | grep -q 'running'
 
-CMD openclaw gateway --port 18789
+CMD hermes gateway
