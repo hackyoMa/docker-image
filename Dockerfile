@@ -71,7 +71,7 @@ RUN set -eux; \
 
 USER appuser
 
-COPY hermes "${RUNTIME_HOME}/bin/hermes"
+COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
 
 RUN set -eux; \
     playwright install chromium; \
@@ -91,7 +91,6 @@ RUN set -eux; \
     npm install; \
     cd ui-tui; \
     npm install; \
-    chmod +x "${RUNTIME_HOME}/bin/hermes"; \
     uv cache clean --force; \
     npm cache clean --force; \
     rm -rf /tmp/*
