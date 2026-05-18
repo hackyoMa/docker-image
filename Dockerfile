@@ -18,6 +18,7 @@ ARG CHROMIUM_VERSION=1223
 ARG FFMPEG_VERSION=1011
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV RUNTIME_HOME="/home/appuser/.local"
 ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
 
@@ -75,8 +76,8 @@ USER appuser
 
 RUN set -eux; \
     playwright install chromium; \
-    ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
     rm -rf /tmp/*
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD openclaw gateway health | grep -A1 'Gateway Health' | grep -q 'OK'
