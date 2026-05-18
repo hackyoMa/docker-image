@@ -7,8 +7,7 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 ARG UV_VERSION=0.11.14
-ARG PYTHON_VERSION=3.11
-ARG NODE_VERSION=22.22.3
+ARG NODE_VERSION=24.15.0
 ARG HIMALAYA_VERSION=1.2.0
 ARG HERMES_VERSION=2026.5.16
 ARG CLAWHUB_VERSION=0.15.0
@@ -50,9 +49,6 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    uv python install "${PYTHON_VERSION}"; \
-    uv cache clean --force; \
-    python3.11 -V; \
     uv -V; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
@@ -87,11 +83,9 @@ RUN set -eux; \
     tar -xf "${tempDir}/hermes.tar.gz" -C "${HERMES_INSTALL_DIR}" --strip-components 1; \
     rm -rf "${tempDir}"; \
     cd "${HERMES_INSTALL_DIR}"; \
-    UV_PROJECT_ENVIRONMENT="${HERMES_INSTALL_DIR}/venv"; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
-    uv venv venv --python "${PYTHON_VERSION}"; \
-    source venv/bin/activate; \
-    uv sync --extra all --locked; \
+    uv sync --extra all; \
+    source .venv/bin/activate; \
     uv pip install -e '.[all]'; \
     deactivate; \
     npm install; \

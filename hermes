@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${HERMES_INSTALL_DIR}/venv/bin/activate"
+source "${HERMES_INSTALL_DIR}/.venv/bin/activate"
 python3 "${HERMES_INSTALL_DIR}/tools/skills_sync.py"
 deactivate
 
@@ -15,4 +15,4 @@ fi
 
 unset PYTHONPATH
 unset PYTHONHOME
-exec "${HERMES_INSTALL_DIR}/venv/bin/hermes" "$@"
+exec "${HERMES_INSTALL_DIR}/.venv/bin/hermes" "$@"
