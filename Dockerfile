@@ -18,9 +18,10 @@ ARG CHROMIUM_VERSION=1223
 ARG FFMPEG_VERSION=1011
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV RUNTIME_HOME="/home/appuser/.local"
+ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV HERMES_HOME="/home/appuser/.hermes"
 ENV HERMES_INSTALL_DIR="/home/appuser/.hermes-agent"
+ENV RUNTIME_HOME="/home/appuser/.local"
 ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
 
 WORKDIR /home/appuser
@@ -78,8 +79,8 @@ COPY hermes "${RUNTIME_HOME}/bin/hermes"
 
 RUN set -eux; \
     playwright install chromium; \
-    ln -s "/home/appuser/.cache/ms-playwright/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "/home/appuser/.cache/ms-playwright/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
@@ -97,6 +98,8 @@ RUN set -eux; \
     cd ui-tui; \
     npm install; \
     chmod +x "${RUNTIME_HOME}/bin/hermes"; \
+    uv cache clean --force; \
+    npm cache clean --force; \
     rm -rf /tmp/*
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep -A1 'Gateway Service' | grep -q 'running'
