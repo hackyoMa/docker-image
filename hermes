@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source "${HERMES_INSTALL_DIR}/venv/bin/activate"
+python3 "${HERMES_INSTALL_DIR}/tools/skills_sync.py"
+deactivate
+
+if [ ! -f "${HERMES_HOME}/.env" ]; then
+  cp "${HERMES_INSTALL_DIR}/.env.example" "${HERMES_HOME}/.env"
+  chmod 600 "${HERMES_HOME}/.env"
+fi
+
+if [ ! -f "${HERMES_HOME}/config.yaml" ]; then
+  cp "${HERMES_INSTALL_DIR}/cli-config.yaml.example" "${HERMES_HOME}/config.yaml"
+fi
+
+unset PYTHONPATH
+unset PYTHONHOME
+exec "${HERMES_INSTALL_DIR}/venv/bin/hermes" "$@"
