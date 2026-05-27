@@ -7,11 +7,11 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 
-ENV FRP_HOME="/home/appuser/frp"
-ENV PATH="${FRP_HOME}:${PATH}"
+ENV FRP_HOME="/home/appuser/.local"
+ENV PATH="${FRP_HOME}/bin:${PATH}"
 
+WORKDIR /home/appuser
 USER appuser
-WORKDIR "${FRP_HOME}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
@@ -19,13 +19,13 @@ RUN set -eux; \
       "linux/arm64") arch="arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p "${FRP_HOME}"; \
+    mkdir -p "${FRP_HOME}/bin/"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/fatedier/frp/releases/download/v0.69.0/frp_0.69.0_linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/frp.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/frp.tar.gz" -C "${FRP_HOME}" --strip-components 1; \
+    tar -xf "${tempDir}/frp.tar.gz" -C "${FRP_HOME}/bin/" --strip-components 1; \
     rm -rf "${tempDir}" \
-           "${FRP_HOME}/LICENSE"; \
+           "${FRP_HOME}/bin/LICENSE"; \
     frps --version
 
-CMD ["frps", "-c", "/usr/local/frp/frps.toml"]
+CMD ["frps", "-c", "/home/appuser/.local/bin/frps.toml"]
