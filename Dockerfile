@@ -23,6 +23,6 @@ RUN set -eux; \
     tar -xf "${tempDir}/frp.tar.gz" -C "${FRP_HOME}" --strip-components 1; \
     rm -rf "${tempDir}" \
            "${FRP_HOME}/LICENSE"; \
-    frps -version
+    frps --version
 
 CMD ["frps", "-c", "/usr/local/frp/frps.toml"]
