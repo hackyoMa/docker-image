@@ -7,8 +7,11 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 
-ENV FRP_HOME="/usr/local/frp"
+ENV FRP_HOME="/home/appuser/frp"
 ENV PATH="${FRP_HOME}:${PATH}"
+
+USER appuser
+WORKDIR "${FRP_HOME}"
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
