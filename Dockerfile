@@ -14,7 +14,6 @@ ARG CLAWHUB_VERSION=0.18.0
 ARG PLAYWRIGHT_VERSION=1.60.0
 ARG MCPORTER_VERSION=0.11.3
 ARG CHROMIUM_VERSION=1223
-ARG FFMPEG_VERSION=1011
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -64,7 +63,7 @@ USER root
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git build-essential python3-dev libffi-dev ripgrep; \
+    apt-get install -y --no-install-recommends git ffmpeg build-essential python3-dev libffi-dev ripgrep; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
@@ -76,7 +75,6 @@ COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
 RUN set -eux; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
