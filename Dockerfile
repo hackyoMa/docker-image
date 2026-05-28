@@ -10,12 +10,11 @@ ARG UV_VERSION=0.11.16
 ARG PYTHON_VERSION=3.14
 ARG NODE_VERSION=24.16.0
 ARG HIMALAYA_VERSION=1.2.0
-ARG OPENCLAW_VERSION=2026.5.22
+ARG OPENCLAW_VERSION=2026.5.26
 ARG CLAWHUB_VERSION=0.18.0
 ARG PLAYWRIGHT_VERSION=1.60.0
 ARG MCPORTER_VERSION=0.11.3
 ARG CHROMIUM_VERSION=1223
-ARG FFMPEG_VERSION=1011
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -67,7 +66,7 @@ USER root
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git; \
+    apt-get install -y --no-install-recommends git ffmpeg; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
@@ -77,7 +76,6 @@ USER appuser
 RUN set -eux; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/ffmpeg-${FFMPEG_VERSION}/ffmpeg-linux" "${RUNTIME_HOME}/bin/ffmpeg"; \
     rm -rf /tmp/*
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD openclaw gateway health | grep -A1 'Gateway Health' | grep -q 'OK'
