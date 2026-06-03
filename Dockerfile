@@ -6,11 +6,11 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/openclaw-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.16
+ARG UV_VERSION=0.11.18
 ARG PYTHON_VERSION=3.14
 ARG NODE_VERSION=24.16.0
 ARG HIMALAYA_VERSION=1.2.0
-ARG OPENCLAW_VERSION=2026.5.26
+ARG OPENCLAW_VERSION=2026.5.28
 ARG CLAWHUB_VERSION=0.18.0
 ARG PLAYWRIGHT_VERSION=1.60.0
 ARG MCPORTER_VERSION=0.11.3
@@ -19,7 +19,7 @@ ARG CHROMIUM_VERSION=1223
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV RUNTIME_HOME="/home/appuser/.local"
-ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
+ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
 
 WORKDIR /home/appuser
 USER appuser
@@ -49,7 +49,8 @@ RUN set -eux; \
     rm -rf "${tempDir}"; \
     uv python install "${PYTHON_VERSION}"; \
     uv cache clean --force; \
-    ln -s "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}" "${RUNTIME_HOME}/bin/python3"; \
+    rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
+    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
     python3 -V; \
     uv -V; \
     tempDir="$(mktemp -d)"; \
@@ -66,7 +67,7 @@ USER root
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git ffmpeg; \
+    apt-get install -y --no-install-recommends git ffmpeg ripgrep; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
