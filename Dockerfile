@@ -6,7 +6,8 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.17
+ARG UV_VERSION=0.11.18
+ARG PYTHON_VERSION=3.14
 ARG NODE_VERSION=24.16.0
 ARG HIMALAYA_VERSION=1.2.0
 ARG HERMES_VERSION=2026.5.29.2
@@ -17,10 +18,9 @@ ARG CHROMIUM_VERSION=1223
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
-ENV HERMES_HOME="/home/appuser/.hermes"
 ENV HERMES_INSTALL_DIR="/home/appuser/.hermes-agent"
 ENV RUNTIME_HOME="/home/appuser/.local"
-ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
+ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
 
 WORKDIR /home/appuser
 USER appuser
@@ -48,6 +48,11 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
+    uv python install "${PYTHON_VERSION}"; \
+    uv cache clean --force; \
+    rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
+    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
+    python3 -V; \
     uv -V; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
@@ -63,7 +68,7 @@ USER root
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git ffmpeg build-essential python3-dev libffi-dev ripgrep; \
+    apt-get install -y --no-install-recommends git ffmpeg ripgrep; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
@@ -83,9 +88,6 @@ RUN set -eux; \
     cd "${HERMES_INSTALL_DIR}"; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     uv sync --extra all; \
-    source .venv/bin/activate; \
-    uv pip install -e '.[all]'; \
-    deactivate; \
     npm install; \
     cd ui-tui; \
     npm install; \

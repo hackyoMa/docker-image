@@ -13,6 +13,10 @@ if [ ! -f "${HERMES_HOME}/config.yaml" ]; then
   cp "${HERMES_INSTALL_DIR}/cli-config.yaml.example" "${HERMES_HOME}/config.yaml"
 fi
 
+if [ ! -f "${HERMES_HOME}/.install_method" ]; then
+  echo "git" > "${HERMES_HOME}/.install_method"
+fi
+
 unset PYTHONPATH
 unset PYTHONHOME
 exec "${HERMES_INSTALL_DIR}/.venv/bin/hermes" "$@"
