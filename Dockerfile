@@ -18,6 +18,7 @@ ARG CHROMIUM_VERSION=1223
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
+ENV HERMES_HOME="/home/appuser/.hermes"
 ENV HERMES_INSTALL_DIR="/home/appuser/.hermes-agent"
 ENV RUNTIME_HOME="/home/appuser/.local"
 ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
