@@ -69,7 +69,7 @@ USER root
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git ffmpeg ripgrep; \
+    apt-get install -y --no-install-recommends git ffmpeg ripgrep build-essential python3-dev libffi-dev; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
@@ -88,9 +88,7 @@ RUN set -eux; \
     rm -rf "${tempDir}"; \
     cd "${HERMES_INSTALL_DIR}"; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
-    uv sync --extra all; \
-    npm install; \
-    cd ui-tui; \
+    uv sync --extra all --locked; \
     npm install; \
     uv cache clean --force; \
     npm cache clean --force; \
