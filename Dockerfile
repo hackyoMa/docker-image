@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 ARG UV_VERSION=0.11.23
-ARG PYTHON_VERSION=3.14
+ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.17.0
 ARG HIMALAYA_VERSION=1.2.0
 ARG HERMES_VERSION=2026.6.19
@@ -89,7 +89,7 @@ RUN set -eux; \
     cd "${HERMES_INSTALL_DIR}"; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
-    uv sync --extra all --locked; \
+    UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
     npm install; \
     uv cache clean --force; \
     npm cache clean --force; \
