@@ -6,15 +6,15 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.18
+ARG UV_VERSION=0.11.23
 ARG PYTHON_VERSION=3.14
-ARG NODE_VERSION=24.16.0
+ARG NODE_VERSION=24.17.0
 ARG HIMALAYA_VERSION=1.2.0
-ARG HERMES_VERSION=2026.6.5
-ARG CLAWHUB_VERSION=0.18.0
-ARG PLAYWRIGHT_VERSION=1.60.0
-ARG MCPORTER_VERSION=0.11.3
-ARG CHROMIUM_VERSION=1223
+ARG HERMES_VERSION=2026.6.19
+ARG CLAWHUB_VERSION=0.22.0
+ARG PLAYWRIGHT_VERSION=1.61.0
+ARG MCPORTER_VERSION=0.12.0
+ARG CHROMIUM_VERSION=1228
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -87,6 +87,7 @@ RUN set -eux; \
     tar -xf "${tempDir}/hermes.tar.gz" -C "${HERMES_INSTALL_DIR}" --strip-components 1; \
     rm -rf "${tempDir}"; \
     cd "${HERMES_INSTALL_DIR}"; \
+    echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     uv sync --extra all --locked; \
     npm install; \
