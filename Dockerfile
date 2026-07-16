@@ -21,7 +21,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${FRP_HOME}/bin/"; \
     tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/fatedier/frp/releases/download/v0.69.0/frp_0.69.0_linux_${arch}.tar.gz"; \
+    tarUrl="https://github.com/fatedier/frp/releases/download/v0.70.0/frp_0.70.0_linux_${arch}.tar.gz"; \
     curl -fL -o "${tempDir}/frp.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/frp.tar.gz" -C "${FRP_HOME}/bin/" --strip-components 1; \
     rm -rf "${tempDir}" \
