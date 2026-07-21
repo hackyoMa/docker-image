@@ -6,11 +6,11 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.28
+ARG UV_VERSION=0.11.30
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
 ARG HIMALAYA_VERSION=1.2.0
-ARG HERMES_VERSION=2026.7.7.2
+ARG HERMES_VERSION=2026.7.20
 ARG CLAWHUB_VERSION=0.23.1
 ARG PLAYWRIGHT_VERSION=1.61.1
 ARG MCPORTER_VERSION=0.12.3
@@ -90,7 +90,7 @@ RUN set -eux; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
-    npm install; \
+    npm install --silent; \
     uv cache clean --force; \
     npm cache clean --force; \
     rm -rf /tmp/*
