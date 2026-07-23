@@ -63,7 +63,7 @@ RUN set -eux; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
     uv python install "${PYTHON_VERSION}"; \
-    uv cache clean --force; \
+    rm -rf ~/.cache/uv; \
     rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
     ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
     python3 -V; \
@@ -78,7 +78,7 @@ RUN set -eux; \
     npm install -g \
       "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
       "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
-    npm cache clean --force
+    rm -rf ~/.npm
 
 USER root
 
@@ -96,7 +96,8 @@ RUN set -eux; \
       dotnet-sdk-${DOTNET_VERSION} pandoc libreoffice-core; \
     playwright install-deps chromium; \
     apt-get clean; \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*; \
+    rm -rf /tmp/*
 
 USER appuser
 
@@ -110,8 +111,7 @@ RUN set -eux; \
     pip install --break-system-packages \
       "markitdown[pptx]==${MARKITDOWN_VERSION}" \
       "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
-    pip cache purge; \
-    rm -rf "$(pip cache dir)"; \
+    rm -rf ~/.cache/pip; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
@@ -121,9 +121,11 @@ RUN set -eux; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
-    uv cache clean --force; \
-    npm install --silent; \
-    npm cache clean --force; \
+    rm -rf ~/.cache/uv; \
+    npm install; \
+    rm -rf ~/.npm; \
+    rm -rf ~/.cache/electron; \
+    rm -rf ~/.cache/node-gyp; \
     rm -rf /tmp/*
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep -A1 'Gateway Service' | grep -q 'running'
