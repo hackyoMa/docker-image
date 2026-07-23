@@ -6,15 +6,26 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/openclaw-2026"
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.11.26
+ARG DEBIAN_VERSION=13
+ARG UV_VERSION=0.11.31
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
 ARG HIMALAYA_VERSION=1.2.0
-ARG OPENCLAW_VERSION=2026.6.11
+ARG OPENCLAW_VERSION=2026.7.1
 ARG CLAWHUB_VERSION=0.23.1
 ARG PLAYWRIGHT_VERSION=1.61.1
 ARG MCPORTER_VERSION=0.12.3
+ARG PPTXGENJS_VERSION=4.0.1
+ARG REACT_ICONS_VERSION=5.7.0
+ARG REACT_VERSION=19.2.8
+ARG REACT_DOM_VERSION=19.2.8
+ARG SHARP_VERSION=0.35.3
+ARG DOTNET_VERSION=10.0
 ARG CHROMIUM_VERSION=1228
+ARG MARKITDOWN_VERSION=0.1.6
+ARG REPORTLAB_VERSION=5.0.0
+ARG PYPDF_VERSION=6.14.2
+ARG MATPLOTLIB_VERSION=3.11.1
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -24,6 +35,8 @@ ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
 WORKDIR /home/appuser
 USER appuser
 
+# base: clawhub playwright mcporter
+# pptx-generator: pptxgenjs react-icons react react-dom sharp
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin"; \
     case "${TARGETPLATFORM}" in \
@@ -48,7 +61,7 @@ RUN set -eux; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
     uv python install "${PYTHON_VERSION}"; \
-    uv cache clean --force; \
+    rm -rf ~/.cache/uv; \
     rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
     ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
     python3 -V; \
@@ -60,23 +73,41 @@ RUN set -eux; \
     mv "${tempDir}/himalaya" "${RUNTIME_HOME}/bin/"; \
     rm -rf "${tempDir}"; \
     himalaya --version; \
-    npm install -g "openclaw@${OPENCLAW_VERSION}" "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}"; \
-    npm cache clean --force
+    npm install -g \
+      "openclaw@${OPENCLAW_VERSION}" \
+      "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
+      "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
+    rm -rf ~/.npm; \
+    rm -rf /tmp/*
 
 USER root
 
+# base: git ffmpeg ripgrep wget jq zip unzip
+# minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
 RUN set -eux; \
+    curl -L -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/${DEBIAN_VERSION}/packages-microsoft-prod.deb; \
+    dpkg -i packages-microsoft-prod.deb; \
+    rm packages-microsoft-prod.deb; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git ffmpeg ripgrep; \
+    apt-get install -y --no-install-recommends \
+      git ffmpeg ripgrep wget jq zip unzip \
+      dotnet-sdk-${DOTNET_VERSION} pandoc libreoffice-core; \
     playwright install-deps chromium; \
     apt-get clean; \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*; \
+    rm -rf /tmp/*
 
 USER appuser
 
+# pptx-generator: markitdown[pptx]
+# minimax-pdf: reportlab pypdf matplotlib
 RUN set -eux; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    pip install --break-system-packages \
+      "markitdown[pptx]==${MARKITDOWN_VERSION}" \
+      "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
+    rm -rf ~/.cache/pip; \
     rm -rf /tmp/*
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD openclaw gateway health | grep -A1 'Gateway Health' | grep -q 'OK'
