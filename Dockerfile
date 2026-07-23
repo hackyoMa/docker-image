@@ -6,6 +6,7 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
 
 ARG TARGETPLATFORM
+ARG DEBIAN_VERSION=13
 ARG UV_VERSION=0.11.30
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
@@ -14,7 +15,17 @@ ARG HERMES_VERSION=2026.7.20
 ARG CLAWHUB_VERSION=0.23.1
 ARG PLAYWRIGHT_VERSION=1.61.1
 ARG MCPORTER_VERSION=0.12.3
+ARG PPTXGENJS_VERSION=4.0.1
+ARG REACT_ICONS_VERSION=5.7.0
+ARG REACT_VERSION=19.2.8
+ARG REACT_DOM_VERSION=19.2.8
+ARG SHARP_VERSION=0.35.3
+ARG DOTNET_VERSION=10.0
 ARG CHROMIUM_VERSION=1228
+ARG MARKITDOWN_VERSION=0.1.6
+ARG REPORTLAB_VERSION=5.0.0
+ARG PYPDF_VERSION=6.14.2
+ARG MATPLOTLIB_VERSION=3.11.1
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -26,6 +37,8 @@ ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
 WORKDIR /home/appuser
 USER appuser
 
+# base: clawhub playwright mcporter
+# pptx-generator: pptxgenjs react-icons react react-dom sharp
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin" "${HERMES_INSTALL_DIR}"; \
     case "${TARGETPLATFORM}" in \
@@ -62,14 +75,25 @@ RUN set -eux; \
     mv "${tempDir}/himalaya" "${RUNTIME_HOME}/bin/"; \
     rm -rf "${tempDir}"; \
     himalaya --version; \
-    npm install -g "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}"; \
+    npm install -g \
+      "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
+      "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
     npm cache clean --force
 
 USER root
 
+# base: git ffmpeg ripgrep wget jq zip unzip
+# hermes: build-essential python3-dev libffi-dev
+# minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
 RUN set -eux; \
+    curl -L -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/${DEBIAN_VERSION}/packages-microsoft-prod.deb; \
+    dpkg -i packages-microsoft-prod.deb; \
+    rm packages-microsoft-prod.deb; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git ffmpeg ripgrep build-essential python3-dev libffi-dev; \
+    apt-get install -y --no-install-recommends \
+      git ffmpeg ripgrep wget jq zip unzip \
+      build-essential python3-dev libffi-dev \
+      dotnet-sdk-${DOTNET_VERSION} pandoc libreoffice-core; \
     playwright install-deps chromium; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
@@ -78,9 +102,16 @@ USER appuser
 
 COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
 
+# pptx-generator: markitdown[pptx]
+# minimax-pdf: reportlab pypdf matplotlib
 RUN set -eux; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    pip install --break-system-packages \
+      "markitdown[pptx]==${MARKITDOWN_VERSION}" \
+      "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
+    pip cache purge; \
+    rm -rf "$(pip cache dir)"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
@@ -90,8 +121,8 @@ RUN set -eux; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
-    npm install --silent; \
     uv cache clean --force; \
+    npm install --silent; \
     npm cache clean --force; \
     rm -rf /tmp/*
 
