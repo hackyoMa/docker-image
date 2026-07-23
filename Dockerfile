@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.authors="hackyo" \
 
 ARG TARGETPLATFORM
 ARG DEBIAN_VERSION=13
-ARG UV_VERSION=0.11.30
+ARG UV_VERSION=0.11.31
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
 ARG HIMALAYA_VERSION=1.2.0
@@ -78,7 +78,8 @@ RUN set -eux; \
     npm install -g \
       "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
       "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
-    rm -rf ~/.npm
+    rm -rf ~/.npm; \
+    rm -rf /tmp/*
 
 USER root
 
