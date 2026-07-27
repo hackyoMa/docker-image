@@ -103,7 +103,7 @@ RUN set -eux; \
     pip install --user --break-system-packages \
       "markitdown[pptx]==${MARKITDOWN_VERSION}" \
       "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
-    rm -rf ~/.local/share/man \
+    rm -rf ~/.local/share/man; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     tempDir="$(mktemp -d)"; \
