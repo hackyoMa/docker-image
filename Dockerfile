@@ -11,10 +11,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /home/appuser
 
-USER root
-
 # base: git ffmpeg ripgrep wget jq zip unzip
-# hermes: build-essential python3-dev libffi-dev
+# hermes: build-essential python3-dev python3-pip libffi-dev
 # minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
 # chromium: at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji
 #           fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64
@@ -28,7 +26,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
       git ffmpeg ripgrep wget jq zip unzip \
-      build-essential python3-dev libffi-dev \
+      build-essential python3-dev python3-pip libffi-dev \
       dotnet-sdk-10.0 pandoc libreoffice-core \
       at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji \
       fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 \
@@ -42,7 +40,6 @@ RUN set -eux; \
 USER appuser
 
 ARG UV_VERSION=0.11.31
-ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
 ARG HIMALAYA_VERSION=1.2.0
 ARG HERMES_VERSION=2026.7.20
@@ -64,7 +61,7 @@ ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV HERMES_HOME="/home/appuser/.hermes"
 ENV HERMES_INSTALL_DIR="/home/appuser/.hermes-agent"
 ENV RUNTIME_HOME="/home/appuser/.local"
-ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
+ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
 
 # base: clawhub playwright mcporter
 # pptx-generator: pptxgenjs react-icons react react-dom sharp markitdown[pptx]
@@ -92,10 +89,6 @@ RUN set -eux; \
     curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
-    uv python install "${PYTHON_VERSION}"; \
-    rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
-    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
-    python3 -V; \
     uv -V; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
@@ -107,11 +100,12 @@ RUN set -eux; \
     npm install -g \
       "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
       "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
-    playwright install chromium; \
-    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    pip install --break-system-packages \
+    pip install --user --break-system-packages \
       "markitdown[pptx]==${MARKITDOWN_VERSION}" \
       "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
+    rm -rf ~/.local/share/man \
+    playwright install chromium; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
