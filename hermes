@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 if [ ! -f "${HERMES_HOME}/.env" ]; then
   cp "${HERMES_INSTALL_DIR}/.env.example" "${HERMES_HOME}/.env"
@@ -15,7 +15,7 @@ You are Hermes Agent, an intelligent AI assistant created by Nous Research. You 
 SOUL_EOF
 fi
 
-source "${HERMES_INSTALL_DIR}/venv/bin/activate"
+. "${HERMES_INSTALL_DIR}/venv/bin/activate"
 python3 "${HERMES_INSTALL_DIR}/tools/skills_sync.py" > /dev/null
 deactivate
 

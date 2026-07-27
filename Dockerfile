@@ -6,7 +6,41 @@ LABEL org.opencontainers.image.authors="hackyo" \
       org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
 
 ARG TARGETPLATFORM
-ARG DEBIAN_VERSION=13
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /home/appuser
+
+USER root
+
+# base: git ffmpeg ripgrep wget jq zip unzip
+# hermes: build-essential python3-dev libffi-dev
+# minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
+# chromium: at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji
+#           fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64
+#           libatspi2.0-0t64 libfontenc1 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2
+#           libxkbfile1 libxmu6 libxpm4 libxt6t64 x11-xkb-utils xfonts-encodings xfonts-scalable
+#           xfonts-utils xserver-common xvfb
+RUN set -eux; \
+    curl -L -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb; \
+    dpkg -i packages-microsoft-prod.deb; \
+    rm packages-microsoft-prod.deb; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      git ffmpeg ripgrep wget jq zip unzip \
+      build-essential python3-dev libffi-dev \
+      dotnet-sdk-10.0 pandoc libreoffice-core \
+      at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji \
+      fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 \
+      libatspi2.0-0t64 libfontenc1 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2 \
+      libxkbfile1 libxmu6 libxpm4 libxt6t64 x11-xkb-utils xfonts-encodings xfonts-scalable \
+      xfonts-utils xserver-common xvfb; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
+    rm -rf /tmp/*
+
+USER appuser
+
 ARG UV_VERSION=0.11.31
 ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=24.18.0
@@ -20,25 +54,21 @@ ARG REACT_ICONS_VERSION=5.7.0
 ARG REACT_VERSION=19.2.8
 ARG REACT_DOM_VERSION=19.2.8
 ARG SHARP_VERSION=0.35.3
-ARG DOTNET_VERSION=10.0
 ARG CHROMIUM_VERSION=1228
 ARG MARKITDOWN_VERSION=0.1.6
 ARG REPORTLAB_VERSION=5.0.0
 ARG PYPDF_VERSION=6.14.2
 ARG MATPLOTLIB_VERSION=3.11.1
 
-ENV DEBIAN_FRONTEND=noninteractive
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV HERMES_HOME="/home/appuser/.hermes"
 ENV HERMES_INSTALL_DIR="/home/appuser/.hermes-agent"
 ENV RUNTIME_HOME="/home/appuser/.local"
 ENV PATH="${RUNTIME_HOME}/bin:${RUNTIME_HOME}/share/python/bin:${PATH}"
 
-WORKDIR /home/appuser
-USER appuser
-
 # base: clawhub playwright mcporter
-# pptx-generator: pptxgenjs react-icons react react-dom sharp
+# pptx-generator: pptxgenjs react-icons react react-dom sharp markitdown[pptx]
+# minimax-pdf: reportlab pypdf matplotlib
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin" "${HERMES_INSTALL_DIR}"; \
     case "${TARGETPLATFORM}" in \
@@ -63,7 +93,6 @@ RUN set -eux; \
     tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     rm -rf "${tempDir}"; \
     uv python install "${PYTHON_VERSION}"; \
-    rm -rf ~/.cache/uv; \
     rm "${RUNTIME_HOME}/bin/python${PYTHON_VERSION}"; \
     ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu" "${RUNTIME_HOME}/share/python"; \
     python3 -V; \
@@ -78,41 +107,11 @@ RUN set -eux; \
     npm install -g \
       "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
       "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
-    rm -rf ~/.npm; \
-    rm -rf /tmp/*
-
-USER root
-
-# base: git ffmpeg ripgrep wget jq zip unzip
-# hermes: build-essential python3-dev libffi-dev
-# minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
-RUN set -eux; \
-    curl -L -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/${DEBIAN_VERSION}/packages-microsoft-prod.deb; \
-    dpkg -i packages-microsoft-prod.deb; \
-    rm packages-microsoft-prod.deb; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-      git ffmpeg ripgrep wget jq zip unzip \
-      build-essential python3-dev libffi-dev \
-      dotnet-sdk-${DOTNET_VERSION} pandoc libreoffice-core; \
-    playwright install-deps chromium; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/*; \
-    rm -rf /tmp/*
-
-USER appuser
-
-COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
-
-# pptx-generator: markitdown[pptx]
-# minimax-pdf: reportlab pypdf matplotlib
-RUN set -eux; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     pip install --break-system-packages \
       "markitdown[pptx]==${MARKITDOWN_VERSION}" \
       "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
-    rm -rf ~/.cache/pip; \
     tempDir="$(mktemp -d)"; \
     tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
     curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
@@ -122,12 +121,12 @@ RUN set -eux; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
-    rm -rf ~/.cache/uv; \
     npm install; \
     rm -rf ~/.npm; \
-    rm -rf ~/.cache/electron; \
-    rm -rf ~/.cache/node-gyp; \
+    rm -rf ~/.cache; \
     rm -rf /tmp/*
+
+COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep -A1 'Gateway Service' | grep -q 'running'
 
