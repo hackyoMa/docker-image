@@ -45,6 +45,7 @@ ARG MCPORTER_VERSION=0.12.4
 ARG PLAYWRIGHT_VERSION=1.62.1
 ARG CHROMIUM_VERSION=1234
 ARG HERMES_VERSION=2026.8.3
+ARG PYTHON_VERSION=3.13
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV HERMES_HOME="/home/appuser/.hermes"
@@ -101,7 +102,7 @@ RUN set -eux; \
     cd "${HERMES_INSTALL_DIR}"; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
-    UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked; \
+    UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked --python ${PYTHON_VERSION}; \
     npm install; \
     rm -rf ~/.npm; \
     rm -rf ~/.cache; \
