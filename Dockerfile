@@ -90,7 +90,6 @@ RUN set -eux; \
     npm install -g \
       "openclaw@${OPENCLAW_VERSION}" \
       "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
-    rm -rf ~/.local/share/man; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     rm -rf ~/.npm; \
