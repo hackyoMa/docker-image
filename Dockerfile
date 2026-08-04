@@ -12,50 +12,39 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /home/appuser
 
 # base: git ffmpeg ripgrep wget jq zip unzip
+# OfficeCLI: libicu76
 # hermes: build-essential python3-dev python3-pip libffi-dev
-# minimax-docx: dotnet-sdk-10.0 pandoc libreoffice-core
 # chromium: at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji
-#           fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64
-#           libatspi2.0-0t64 libfontenc1 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2
-#           libxkbfile1 libxmu6 libxpm4 libxt6t64 x11-xkb-utils xfonts-encodings xfonts-scalable
-#           xfonts-utils xserver-common xvfb
+#           fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2.0-0t64
+#           libavahi-client3 libavahi-common-data libavahi-common3 libcups2t64 libfontenc1 libice6 libnspr4 libnss3
+#           libsm6 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2 libxkbfile1 libxmu6 libxpm4 libxt6t64
+#           x11-xkb-utils xfonts-encodings xfonts-scalable xfonts-utils xserver-common xvfb
 RUN set -eux; \
-    curl -L -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb; \
-    dpkg -i packages-microsoft-prod.deb; \
-    rm packages-microsoft-prod.deb; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
       git ffmpeg ripgrep wget jq zip unzip \
+      libicu76 \
       build-essential python3-dev python3-pip libffi-dev \
-      dotnet-sdk-10.0 pandoc libreoffice-core \
       at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji \
-      fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 \
-      libatspi2.0-0t64 libfontenc1 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2 \
-      libxkbfile1 libxmu6 libxpm4 libxt6t64 x11-xkb-utils xfonts-encodings xfonts-scalable \
-      xfonts-utils xserver-common xvfb; \
+      fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2.0-0t64 \
+      libavahi-client3 libavahi-common-data libavahi-common3 libcups2t64 libfontenc1 libice6 libnspr4 libnss3 \
+      libsm6 libunwind8 libxaw7 libxcomposite1 libxdamage1 libxfont2 libxkbfile1 libxmu6 libxpm4 libxt6t64 \
+      x11-xkb-utils xfonts-encodings xfonts-scalable xfonts-utils xserver-common xvfb; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*; \
     rm -rf /tmp/*
 
 USER appuser
 
-ARG UV_VERSION=0.11.31
-ARG NODE_VERSION=24.18.0
-ARG HIMALAYA_VERSION=1.2.0
-ARG HERMES_VERSION=2026.7.20
-ARG CLAWHUB_VERSION=0.23.1
-ARG PLAYWRIGHT_VERSION=1.61.1
-ARG MCPORTER_VERSION=0.12.3
-ARG PPTXGENJS_VERSION=4.0.1
-ARG REACT_ICONS_VERSION=5.7.0
-ARG REACT_VERSION=19.2.8
-ARG REACT_DOM_VERSION=19.2.8
-ARG SHARP_VERSION=0.35.3
-ARG CHROMIUM_VERSION=1228
-ARG MARKITDOWN_VERSION=0.1.6
-ARG REPORTLAB_VERSION=5.0.0
-ARG PYPDF_VERSION=6.14.2
-ARG MATPLOTLIB_VERSION=3.11.1
+ARG NODE_VERSION=24.19.0
+ARG UV_VERSION=0.12.1
+ARG HIMALAYA_VERSION=2.0.0
+ARG OFFICE_CLI_VERSION=1.0.143
+ARG CLAWHUB_VERSION=0.23.3
+ARG MCPORTER_VERSION=0.12.4
+ARG PLAYWRIGHT_VERSION=1.62.1
+ARG CHROMIUM_VERSION=1234
+ARG HERMES_VERSION=2026.8.3
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV HERMES_HOME="/home/appuser/.hermes"
@@ -64,8 +53,6 @@ ENV RUNTIME_HOME="/home/appuser/.local"
 ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
 
 # base: clawhub playwright mcporter
-# pptx-generator: pptxgenjs react-icons react react-dom sharp markitdown[pptx]
-# minimax-pdf: reportlab pypdf matplotlib
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin" "${HERMES_INSTALL_DIR}"; \
     case "${TARGETPLATFORM}" in \
@@ -97,12 +84,12 @@ RUN set -eux; \
     mv "${tempDir}/himalaya" "${RUNTIME_HOME}/bin/"; \
     rm -rf "${tempDir}"; \
     himalaya --version; \
+    tarUrl="https://github.com/iOfficeAI/OfficeCLI/releases/download/v${OFFICE_CLI_VERSION}/officecli-linux-${node_arch}"; \
+    curl -fL -o "${RUNTIME_HOME}/bin/officecli" "${tarUrl}"; \
+    chmod +x "${RUNTIME_HOME}/bin/officecli"; \
+    officecli --version; \
     npm install -g \
-      "clawhub@${CLAWHUB_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "mcporter@${MCPORTER_VERSION}" \
-      "pptxgenjs@${PPTXGENJS_VERSION}" "react-icons@${REACT_ICONS_VERSION}" "react@${REACT_VERSION}" "react-dom@${REACT_DOM_VERSION}" "sharp@${SHARP_VERSION}"; \
-    pip install --user --break-system-packages \
-      "markitdown[pptx]==${MARKITDOWN_VERSION}" \
-      "reportlab==${REPORTLAB_VERSION}" "pypdf==${PYPDF_VERSION}" "matplotlib==${MATPLOTLIB_VERSION}"; \
+      "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
     rm -rf ~/.local/share/man; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
