@@ -1,11 +1,8 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL org.opencontainers.image.authors="hackyo" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/frp-0"
-
 ARG TARGETPLATFORM
+ARG FRP_VERSION=0.71.0
 
 ENV FRP_HOME="/home/appuser/.local"
 ENV PATH="${FRP_HOME}/bin:${PATH}"
@@ -20,12 +17,8 @@ RUN set -eux; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     mkdir -p "${FRP_HOME}/bin/"; \
-    tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/fatedier/frp/releases/download/v0.70.0/frp_0.70.0_linux_${arch}.tar.gz"; \
-    curl -fL -o "${tempDir}/frp.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/frp.tar.gz" -C "${FRP_HOME}/bin/" --strip-components 1; \
-    rm -rf "${tempDir}" \
-           "${FRP_HOME}/bin/LICENSE"; \
+    curl -fsSL "https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_${arch}.tar.gz" \
+      | tar -xzf - -C "${FRP_HOME}/bin/" --strip-components 1; \
     frps --version
 
 CMD ["frps", "-c", "/home/appuser/.local/bin/frps.toml"]
