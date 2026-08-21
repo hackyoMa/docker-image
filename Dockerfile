@@ -17,7 +17,7 @@ RUN set -eux; \
     esac; \
     mkdir -p "${JAVA_HOME}"; \
     curl -fsSL "https://cdn.azul.com/zulu/bin/zulu${ZULU_VERSION}-ca-jdk${JAVA_VERSION}-linux_${arch}.tar.gz" \
-      | tar -xf -C "${JAVA_HOME}" --strip-components 1; \
+      | tar -xf - -C "${JAVA_HOME}" --strip-components 1; \
     rm -rf "${JAVA_HOME}/demo" \
            "${JAVA_HOME}/man" \
            "${JAVA_HOME}/readme.txt" \
