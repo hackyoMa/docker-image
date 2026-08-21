@@ -1,9 +1,9 @@
-name: debian-trixie-slim
+name: debian
 
 on:
   push:
     branches:
-      - debian-trixie-slim
+      - debian
 
 permissions:
   contents: read
