@@ -21,7 +21,9 @@ RUN set -eux; \
     rm -rf "${JAVA_HOME}/demo" \
            "${JAVA_HOME}/man" \
            "${JAVA_HOME}/readme.txt" \
-           "${JAVA_HOME}/Welcome.html"; \
+           "${JAVA_HOME}/Welcome.html" \
+           "${JAVA_HOME}/sample" \
+           "${JAVA_HOME}/src.zip"; \
     java -version
 
 CMD ["java"]
