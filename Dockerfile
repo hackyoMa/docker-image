@@ -12,7 +12,7 @@ ENV PATH="${MAVEN_HOME}/bin:${PATH}"
 
 RUN set -eux; \
     mkdir -p "${MAVEN_HOME}"; \
-    curl -fsSL "https://dlcdn.apache.org/maven/maven-${VERSION}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
+    curl -fsSL "https://archive.apache.org/dist/maven/maven-${VERSION}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" \
       | tar -xzf - -C "${MAVEN_HOME}" --strip-components 1; \
     rm -rf "${MAVEN_HOME}/README.txt"; \
     mvn -v
