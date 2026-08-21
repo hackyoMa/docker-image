@@ -14,8 +14,7 @@ RUN set -eux; \
     esac; \
     curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${arch}.tar.gz" \
       | tar -xzf - -C "${NODE_HOME}" --strip-components 1; \
-    rm -rf "${tempDir}" \
-           "${NODE_HOME}/CHANGELOG.md" \
+    rm -rf "${NODE_HOME}/CHANGELOG.md" \
            "${NODE_HOME}/README.md" \
            "${NODE_HOME}/share"; \
     node -v; \
