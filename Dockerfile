@@ -12,6 +12,10 @@ RUN set -eux; \
       "linux/arm64") arch="arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libatomic1; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*; \
     curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${arch}.tar.gz" \
       | tar -xzf - -C "${NODE_HOME}" --strip-components 1; \
     rm -rf "${NODE_HOME}/CHANGELOG.md" \
