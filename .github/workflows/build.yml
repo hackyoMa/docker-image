@@ -40,7 +40,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: hackyo/jre
+          images: hackyo/maven
           tags: |
             type=raw,value=3.9-jdk-${{ matrix.java_version }}
 
