@@ -16,9 +16,9 @@ RUN set -eux; \
       "linux/arm64") arch="arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    mkdir -p "${FRP_HOME}/bin/"; \
+    mkdir -p "${FRP_HOME}/bin"; \
     curl -fsSL "https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_${arch}.tar.gz" \
-      | tar -xzf - -C "${FRP_HOME}/bin/" --strip-components 1; \
+      | tar -xzf - -C "${FRP_HOME}/bin" --strip-components 1; \
     frps --version
 
 CMD ["frps", "-c", "/home/appuser/.local/bin/frps.toml"]
