@@ -1,10 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM debian:trixie-slim
 
-LABEL org.opencontainers.image.authors="hackyo" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/debian-trixie-slim"
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV LANG=C.UTF-8 \
