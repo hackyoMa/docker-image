@@ -1,10 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM hackyo/debian:trixie-slim
 
-LABEL org.opencontainers.image.authors="hackyo" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.source="https://github.com/hackyoMa/docker-image/tree/hermes-2026"
-
 ARG TARGETPLATFORM
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -44,7 +40,7 @@ ARG CLAWHUB_VERSION=0.23.3
 ARG MCPORTER_VERSION=0.13.7
 ARG PLAYWRIGHT_VERSION=1.62.1
 ARG CHROMIUM_VERSION=1234
-ARG HERMES_VERSION=2026.8.16
+ARG HERMES_VERSION=2026.8.18
 ARG PYTHON_VERSION=3.13
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -61,43 +57,29 @@ RUN set -eux; \
       "linux/arm64") arch="aarch64"; node_arch="arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
-    tempDir="$(mktemp -d)"; \
-    tarUrl="https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${node_arch}.tar.gz"; \
-    curl -fL -o "${tempDir}/node.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/node.tar.gz" -C "${RUNTIME_HOME}" --strip-components 1; \
-    rm -rf "${tempDir}" \
-           "${RUNTIME_HOME}/CHANGELOG.md" \
-           "${RUNTIME_HOME}/LICENSE" \
+    curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${node_arch}.tar.gz" \
+      | tar -xzf - -C "${RUNTIME_HOME}" --strip-components 1; \
+    rm -rf "${RUNTIME_HOME}/CHANGELOG.md" \
            "${RUNTIME_HOME}/README.md" \
            "${RUNTIME_HOME}/share"; \
     node -v; \
     npm -v; \
-    tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz"; \
-    curl -fL -o "${tempDir}/uv.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/uv.tar.gz" -C "${RUNTIME_HOME}/bin" --strip-components 1; \
-    rm -rf "${tempDir}"; \
+    curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz" \
+      | tar -xzf - -C "${RUNTIME_HOME}/bin" --strip-components 1; \
     uv -V; \
-    tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz"; \
-    curl -fL -o "${tempDir}/himalaya.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/himalaya.tar.gz" -C "${tempDir}"; \
-    mv "${tempDir}/himalaya" "${RUNTIME_HOME}/bin/"; \
-    rm -rf "${tempDir}"; \
+    curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz" \
+      | tar -xzf - -C "${RUNTIME_HOME}/bin"; \
+    rm -rf "${RUNTIME_HOME}/bin/share"; \
     himalaya --version; \
-    tarUrl="https://github.com/iOfficeAI/OfficeCLI/releases/download/v${OFFICE_CLI_VERSION}/officecli-linux-${node_arch}"; \
-    curl -fL -o "${RUNTIME_HOME}/bin/officecli" "${tarUrl}"; \
+    curl -fL -o "${RUNTIME_HOME}/bin/officecli" "https://github.com/iOfficeAI/OfficeCLI/releases/download/v${OFFICE_CLI_VERSION}/officecli-linux-${node_arch}"; \
     chmod +x "${RUNTIME_HOME}/bin/officecli"; \
     officecli --version; \
     npm install -g \
       "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
-    tempDir="$(mktemp -d)"; \
-    tarUrl="https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz"; \
-    curl -fL -o "${tempDir}/hermes.tar.gz" "${tarUrl}"; \
-    tar -xf "${tempDir}/hermes.tar.gz" -C "${HERMES_INSTALL_DIR}" --strip-components 1; \
-    rm -rf "${tempDir}"; \
+    curl -fsSL "https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz" \
+      | tar -xzf - -C "${HERMES_INSTALL_DIR}" --strip-components 1; \
     cd "${HERMES_INSTALL_DIR}"; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
