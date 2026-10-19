@@ -97,6 +97,6 @@ RUN set -eux; \
 
 COPY --chown=appuser:appuser --chmod=775 hermes "${RUNTIME_HOME}/bin/hermes"
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep -A1 'Gateway Service' | grep -q 'running'
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD hermes status | grep 'Gateway:' | grep -q '✓ running'
 
 CMD hermes gateway
