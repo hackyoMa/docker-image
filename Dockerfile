@@ -9,7 +9,7 @@ WORKDIR /home/appuser
 
 # base: git ffmpeg ripgrep wget jq zip unzip
 # OfficeCLI: libicu76
-# openclaw: build-essential python3-dev python3-pip libffi-dev
+# openclaw: build-essential
 # chromium: at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji
 #           fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2.0-0t64
 #           libavahi-client3 libavahi-common-data libavahi-common3 libcups2t64 libfontenc1 libice6 libnspr4 libnss3
@@ -20,7 +20,7 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
       git ffmpeg ripgrep wget jq zip unzip \
       libicu76 \
-      build-essential python3-dev python3-pip libffi-dev \
+      build-essential \
       at-spi2-common fonts-freefont-ttf fonts-ipafont-gothic fonts-liberation fonts-noto-color-emoji \
       fonts-tlwg-loma-otf fonts-unifont fonts-wqy-zenhei libatk-bridge2.0-0t64 libatk1.0-0t64 libatspi2.0-0t64 \
       libavahi-client3 libavahi-common-data libavahi-common3 libcups2t64 libfontenc1 libice6 libnspr4 libnss3 \
@@ -32,16 +32,16 @@ RUN set -eux; \
 
 USER appuser
 
-ARG NODE_VERSION=24.21.0
-ARG UV_VERSION=0.12.12
-ARG HIMALAYA_VERSION=2.1.0
-ARG OFFICE_CLI_VERSION=1.0.148
+ARG NODE_VERSION=24.22.0
+ARG UV_VERSION=0.13.1
+ARG HIMALAYA_VERSION=2.2.1
+ARG OFFICE_CLI_VERSION=1.0.157
 ARG CLAWHUB_VERSION=0.23.3
-ARG MCPORTER_VERSION=0.13.10
-ARG PLAYWRIGHT_VERSION=1.63.0
-ARG CHROMIUM_VERSION=1243
-ARG OPENCLAW_VERSION=2026.9.3
-ARG PYTHON_VERSION=3.13
+ARG MCPORTER_VERSION=0.15.0
+ARG PLAYWRIGHT_VERSION=1.64.1
+ARG CHROMIUM_VERSION=1248
+ARG OPENCLAW_VERSION=2026.10.5
+ARG PYTHON_VERSION=3.14
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
 ENV RUNTIME_HOME="/home/appuser/.local"
@@ -51,8 +51,8 @@ ENV PATH="${RUNTIME_HOME}/bin:${PATH}"
 RUN set -eux; \
     mkdir -p "${RUNTIME_HOME}/bin"; \
     case "${TARGETPLATFORM}" in \
-      "linux/amd64") arch="x86_64"; node_arch="x64" ;; \
-      "linux/arm64") arch="aarch64"; node_arch="arm64" ;; \
+      "linux/amd64") arch="x86_64"; node_arch="x64"; chromium_arch="linux64" ;; \
+      "linux/arm64") arch="aarch64"; node_arch="arm64"; chromium_arch="linux-arm64" ;; \
       *) echo "Unsupported platform: ${TARGETPLATFORM}"; exit 1 ;; \
     esac; \
     curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${node_arch}.tar.gz" \
@@ -64,7 +64,13 @@ RUN set -eux; \
     npm -v; \
     curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${arch}-unknown-linux-gnu.tar.gz" \
       | tar -xzf - -C "${RUNTIME_HOME}/bin" --strip-components 1; \
+    uv python install ${PYTHON_VERSION}; \
+    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu/bin/pip${PYTHON_VERSION}" "${RUNTIME_HOME}/bin/pip${PYTHON_VERSION}"; \
+    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu/bin/python3" "${RUNTIME_HOME}/bin/python3"; \
+    ln -s "${RUNTIME_HOME}/share/uv/python/cpython-${PYTHON_VERSION}-linux-${arch}-gnu/bin/pip3" "${RUNTIME_HOME}/bin/pip3"; \
     uv -V; \
+    python3 -V; \
+    pip3 -V; \
     curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.${arch}-linux.tgz" \
       | tar -xzf - -C "${RUNTIME_HOME}/bin"; \
     rm -rf "${RUNTIME_HOME}/bin/share"; \
@@ -76,7 +82,7 @@ RUN set -eux; \
       "openclaw@${OPENCLAW_VERSION}" \
       "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
     playwright install chromium; \
-    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-linux/chrome" "${RUNTIME_HOME}/bin/chromium"; \
+    ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-${chromium_arch}/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     rm -rf ~/.npm; \
     rm -rf ~/.cache; \
     rm -rf /tmp/*
