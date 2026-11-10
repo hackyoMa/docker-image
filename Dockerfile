@@ -41,6 +41,7 @@ ARG MCPORTER_VERSION=0.17.0
 ARG PLAYWRIGHT_VERSION=1.65.0
 ARG CHROMIUM_VERSION=1254
 ARG OPENCLAW_VERSION=2026.11.2
+ARG PNPM_VERSION=12.15.0
 ARG PYTHON_VERSION=3.14
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -80,7 +81,7 @@ RUN set -eux; \
     officecli --version; \
     npm install -g \
       "openclaw@${OPENCLAW_VERSION}" \
-      "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
+      "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "pnpm@${PNPM_VERSION}"; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-${chromium_arch}/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     rm -rf ~/.npm; \
