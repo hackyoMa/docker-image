@@ -2,7 +2,7 @@
 FROM hackyo/debian:trixie-slim
 
 ARG TARGETPLATFORM
-ARG FRP_VERSION=0.71.0
+ARG FRP_VERSION=0.72.0
 
 ENV FRP_HOME="/home/appuser/.local"
 ENV PATH="${FRP_HOME}/bin:${PATH}"
