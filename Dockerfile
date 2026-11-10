@@ -41,6 +41,7 @@ ARG MCPORTER_VERSION=0.17.0
 ARG PLAYWRIGHT_VERSION=1.65.0
 ARG CHROMIUM_VERSION=1254
 ARG HERMES_VERSION=0.23.1
+ARG PNPM_VERSION=12.18.0
 ARG PYTHON_VERSION=3.14
 
 ENV PLAYWRIGHT_BROWSERS_PATH="/home/appuser/.playwright"
@@ -81,7 +82,7 @@ RUN set -eux; \
     chmod +x "${RUNTIME_HOME}/bin/officecli"; \
     officecli --version; \
     npm install -g \
-      "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}"; \
+      "clawhub@${CLAWHUB_VERSION}" "mcporter@${MCPORTER_VERSION}" "playwright@${PLAYWRIGHT_VERSION}" "pnpm@${PNPM_VERSION}"; \
     playwright install chromium; \
     ln -s "${PLAYWRIGHT_BROWSERS_PATH}/chromium-${CHROMIUM_VERSION}/chrome-${chromium_arch}/chrome" "${RUNTIME_HOME}/bin/chromium"; \
     curl -fsSL "https://github.com/NousResearch/hermes-agent/archive/refs/tags/v${HERMES_VERSION}.tar.gz" \
@@ -90,7 +91,7 @@ RUN set -eux; \
     echo "git" > .install_method; \
     echo "AGENT_BROWSER_EXECUTABLE_PATH=${RUNTIME_HOME}/bin/chromium" >> .env.example; \
     UV_PROJECT_ENVIRONMENT=venv uv sync --extra all --locked --python ${PYTHON_VERSION}; \
-    npm install; \
+    pnpm install --frozen-lockfile; \
     rm -rf ~/.npm; \
     rm -rf ~/.cache; \
     rm -rf /tmp/*
