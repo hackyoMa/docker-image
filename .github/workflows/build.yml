@@ -29,6 +29,8 @@ jobs:
           images: hackyo/zipkin
           tags: |
             type=raw,value=3
+          labels: |
+            com.github.hackyoMa=20261110
 
       - name: Login to Docker Hub
         uses: docker/login-action@v4
