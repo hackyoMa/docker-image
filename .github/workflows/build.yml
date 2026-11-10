@@ -29,6 +29,7 @@ jobs:
         com.github.hackyoMa=20261110
       set-meta-labels: true
       set-meta-annotations: true
+      registry-login: true
       sbom: true
     secrets:
       registry-auths: |
