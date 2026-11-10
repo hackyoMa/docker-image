@@ -2,7 +2,7 @@
 FROM hackyo/debian:trixie-slim
 
 ARG TARGETPLATFORM
-ARG UV_VERSION=0.12.5
+ARG UV_VERSION=0.13.7
 
 RUN set -eux; \
     case "${TARGETPLATFORM}" in \
